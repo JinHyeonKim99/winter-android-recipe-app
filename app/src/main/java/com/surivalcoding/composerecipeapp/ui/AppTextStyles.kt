@@ -23,13 +23,21 @@ object AppTextStyles {
 
     val smallerTextBold = TextStyle(
         fontSize = 11.sp,
-        fontWeight = FontWeight.Bold,
+        lineHeight = 17.sp,
+        fontWeight = FontWeight.W600,
+        fontFamily = poppinsFamily,
+    )
+
+    val smallTextBold = TextStyle(
+        fontSize = 14.sp,
+        lineHeight = 21.sp,
+        fontWeight = FontWeight.W600,
         fontFamily = poppinsFamily,
     )
 
     val normalTextBold = TextStyle(
         fontSize = 16.sp,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.W600,
         fontFamily = poppinsFamily,
     )
 
@@ -69,7 +77,8 @@ object AppTextStyles {
     )
 
     val smallerTextRegular = TextStyle(
-        fontSize = 14.sp,
+        fontSize = 11.sp,
+        lineHeight = 17.sp,
         fontWeight = FontWeight.Normal,
         fontFamily = poppinsFamily,
     )

@@ -4,6 +4,7 @@ import android.graphics.Color.BLUE
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,10 +51,11 @@ import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 fun RecipeCard(
     recipe: Recipe,
     modifier: Modifier = Modifier,
-    onBookmarkClick: (Int) -> Unit = {}
+    onBookmarkClick: (Int) -> Unit = {},
 ) {
     Box(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .aspectRatio(315 / 150f)
             .clip(RoundedCornerShape(10.dp))
     ) {
@@ -86,115 +88,82 @@ fun RecipeCard(
                 )
         )
 
-        Row(
+        Column(
             modifier = Modifier
-                .align(Alignment.TopEnd) // 오른쪽 상단 정렬
-                .width(37.dp)
-                .height(16.dp)
-                .offset(x = (-10).dp, y = 10.dp) // 모서리에서 10.dp 안쪽으로 이동
-                .background(
-                    color = AppColors.secondary20,
-                    shape = RoundedCornerShape(size = 20.dp)
-                ),
-//                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically // 아이콘과 텍스트를 세로 중앙 정렬
-        ) {
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "Rate Star",
-                tint = AppColors.rating,
-                modifier = Modifier.size(8.dp)
-                    .weight(1f)
-            )
-            Text(
-                text = recipe.starRate.toString(),
-                style = AppTextStyles.smallerTextLabel,
-                modifier = Modifier.size(12.dp)
-                    .weight(1f)
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomStart)
+                .fillMaxSize()
                 .padding(10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Bottom
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier.weight(2f)
-            ) {
-                Text(
-                    modifier = Modifier.aspectRatio(200/42f),
-                    text = recipe.title,
-                    style = AppTextStyles.smallerTextSemiBold.copy(
-                        color = AppColors.white,
-                        fontSize = 18.sp,
-                        lineHeight = 21.sp
-                    ),
-                    maxLines = 2,
-                    overflow = TextOverflow.Visible,
-                )
-                Text(
-                    text = "By ${recipe.chef}",
-                    style = AppTextStyles.smallerTextLabel.copy(
-                        fontSize = 8.sp,
-                        lineHeight = 12.sp,
-                        color = AppColors.gray4
-                    )
-                )
-            }
+            StarRateIcon(
+                starRate = recipe.starRate
+            )
 
             Row(
-                modifier = Modifier.aspectRatio(94/24f)
-                    .weight(1f),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Bottom
             ) {
-                Spacer(
-                    modifier = Modifier.size(10.dp)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.timer),
-                    contentDescription = "Cooking Time",
-                    tint = AppColors.gray4,
-                    modifier = Modifier
-                        .size(17.dp)
-                        .aspectRatio(1f)
-                )
-                Text(
-                    text = recipe.cookingDuration,
-                    style = AppTextStyles.smallerTextRegular.copy(
-                        fontSize = 11.sp,
-                        lineHeight = 17.sp,
-                        color = AppColors.white
-                    ),
-                    maxLines = 1,
-                    modifier = Modifier.padding(start = 5.dp, end = 18.dp)
-                )
-
-                Button(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .padding(4.dp), // 여백 설정
-                    onClick = { onBookmarkClick(recipe.id) },
-                    contentPadding = PaddingValues(0.dp), // 추가 패딩 없음
-                    shape = CircleShape, // 버튼 모양
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White
-                    )
+                Column(
+                    modifier = Modifier.weight(2f)
                 ) {
-                    // 아이콘
-                    Icon(
-                        painter = painterResource(id = R.drawable.bookmark),
-                        contentDescription = "Save Recipe",
-                        tint = AppColors.primary80,
-                        modifier = Modifier
-                            .size(17.dp) // 아이콘 크기
+                    Text(
+                        modifier = Modifier.aspectRatio(200 / 42f),
+                        text = recipe.title,
+                        style = AppTextStyles.smallerTextSemiBold.copy(
+                            color = AppColors.white,
+                            fontSize = 18.sp,
+                            lineHeight = 21.sp
+                        ),
+                        maxLines = 2,
+                        overflow = TextOverflow.Visible,
+                    )
+                    Text(
+                        text = "By ${recipe.chef}",
+                        style = AppTextStyles.smallerTextLabel.copy(
+                            fontSize = 8.sp,
+                            lineHeight = 12.sp,
+                            color = AppColors.gray4
+                        )
                     )
                 }
 
+                Row(
+                    modifier = Modifier
+                        .aspectRatio(94 / 24f)
+                        .weight(1f),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Spacer(
+                        modifier = Modifier.size(10.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.timer),
+                        contentDescription = "Cooking Time",
+                        tint = AppColors.gray4,
+                        modifier = Modifier
+                            .size(17.dp)
+                            .aspectRatio(1f)
+                    )
+                    Text(
+                        text = recipe.cookingDuration,
+                        style = AppTextStyles.smallerTextRegular.copy(
+                            fontSize = 11.sp,
+                            lineHeight = 17.sp,
+                            color = AppColors.white
+                        ),
+                        maxLines = 1,
+                        modifier = Modifier.padding(start = 5.dp, end = 18.dp)
+                    )
+
+                    // 아이콘
+                    BookmarkIcon(
+                        recipeId = recipe.id,
+                        onBookmarkClick = onBookmarkClick
+                    )
+                }
             }
         }
     }
