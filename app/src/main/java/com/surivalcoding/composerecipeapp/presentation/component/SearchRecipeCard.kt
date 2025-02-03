@@ -48,14 +48,13 @@ fun SearchRecipeCard(
 ) {
     Box(
         modifier = Modifier
-            .size(150.dp)
+            .fillMaxWidth()
             .aspectRatio(1f)
             .clip(RoundedCornerShape(10.dp))
     ) {
         AsyncImage(
             modifier = Modifier
                 .fillMaxSize()
-                .aspectRatio(1f)
                 .clip(RoundedCornerShape(10.dp)),
             contentScale = ContentScale.Crop,
             model = if (LocalInspectionMode.current) {
@@ -70,8 +69,6 @@ fun SearchRecipeCard(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .aspectRatio(1f)
-                .clip(RoundedCornerShape(10.dp))
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
@@ -84,17 +81,43 @@ fun SearchRecipeCard(
                 )
         )
 
-        Column(
+        Row(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp),
-            verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.End
+                .align(Alignment.TopEnd) // 오른쪽 상단 정렬
+                .width(37.dp)
+                .height(16.dp)
+                .offset(x = (-10).dp, y = 10.dp) // 모서리에서 10.dp 안쪽으로 이동
+                .background(
+                    color = AppColors.secondary20,
+                    shape = RoundedCornerShape(size = 20.dp)
+                ),
+//                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically // 아이콘과 텍스트를 세로 중앙 정렬
         ) {
-            StarRateIcon(
-                starRate = recipe.starRate
+            Icon(
+                imageVector = Icons.Default.Star,
+                contentDescription = "Rate Star",
+                tint = AppColors.rating,
+                modifier = Modifier
+                    .aspectRatio(8 / 8f)
+                    .weight(1f)
             )
+            Text(
+                text = recipe.starRate.toString(),
+                style = AppTextStyles.smallerTextLabel,
+                modifier = Modifier.size(12.dp)
+                    .weight(1f)
+            )
+        }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomStart)
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
             Column(
                 modifier = Modifier
             ) {

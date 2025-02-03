@@ -96,6 +96,8 @@ fun RecipeCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             StarRateIcon(
+                modifier = Modifier
+                    .align(Alignment.End),
                 starRate = recipe.starRate
             )
 

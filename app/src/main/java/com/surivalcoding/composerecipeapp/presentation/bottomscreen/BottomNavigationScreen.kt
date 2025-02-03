@@ -22,14 +22,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.surivalcoding.composerecipeapp.R
+import com.surivalcoding.composerecipeapp.presentation.Route
 import com.surivalcoding.composerecipeapp.presentation.mainscreen.MainScreen
+import com.surivalcoding.composerecipeapp.presentation.mainscreen.MainScreenState
 import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeState
 import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipesScreen
+import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipeState
+import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreen
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import kotlinx.serialization.Serializable
 
@@ -37,11 +42,13 @@ import kotlinx.serialization.Serializable
 @Composable
 fun BottomNavigationScreen(
     savedRecipeState: SavedRecipeState = SavedRecipeState(),
+    mainScreenState: MainScreenState = MainScreenState(),
     onBookmarkClick: (Int) -> Unit = {},
     onFocusedChange: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
+    navHostController: NavHostController = rememberNavController() // NavigationRoot의 NavController를 전달받음
 ) {
-    val navController = rememberNavController()
+    val bottomNavController = rememberNavController()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -54,7 +61,7 @@ fun BottomNavigationScreen(
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp,
             ) {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
                 BottomNavigationItem(
                     icon = {
@@ -68,10 +75,10 @@ fun BottomNavigationScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(end = 55.dp),
-                    selected = currentDestination?.hierarchy?.any { it.hasRoute(Route.Main::class) } == true,
+                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Main::class) } == true,
                     onClick = {
-                        navController.navigate(Route.Main) {
-                            popUpTo<Route.Main> {
+                        bottomNavController.navigate(BottomRoute.Main) {
+                            popUpTo<BottomRoute.Main> {
                                 inclusive = true
                             }
                             restoreState = true
@@ -92,10 +99,10 @@ fun BottomNavigationScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(end = 55.dp),
-                    selected = currentDestination?.hierarchy?.any { it.hasRoute(Route.Bookmark::class) } == true,
+                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Bookmark::class) } == true,
                     onClick = {
-                        navController.navigate(Route.Bookmark) {
-                            popUpTo<Route.Main> {
+                        bottomNavController.navigate(BottomRoute.Bookmark) {
+                            popUpTo<BottomRoute.Main> {
                                 inclusive = true
                             }
                             restoreState = true
@@ -116,10 +123,10 @@ fun BottomNavigationScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 55.dp),
-                    selected = currentDestination?.hierarchy?.any { it.hasRoute(Route.Third::class) } == true,
+                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Third::class) } == true,
                     onClick = {
-                        navController.navigate(Route.Third) {
-                            popUpTo<Route.Main> {
+                        bottomNavController.navigate(BottomRoute.Third) {
+                            popUpTo<BottomRoute.Main> {
                                 inclusive = true
                             }
                             restoreState = true
@@ -140,10 +147,10 @@ fun BottomNavigationScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(start = 55.dp),
-                    selected = currentDestination?.hierarchy?.any { it.hasRoute(Route.Fourth::class) } == true,
+                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Fourth::class) } == true,
                     onClick = {
-                        navController.navigate(Route.Fourth) {
-                            popUpTo<Route.Main> {
+                        bottomNavController.navigate(BottomRoute.Fourth) {
+                            popUpTo<BottomRoute.Main> {
                                 inclusive = true
                             }
                             restoreState = true
@@ -154,38 +161,48 @@ fun BottomNavigationScreen(
         }
     ) {
         NavHost(
-            navController = navController,
+            navController = bottomNavController,
             modifier = modifier.padding(it),
-            startDestination = Route.Main,
+            startDestination = BottomRoute.Main,
         ) {
-            composable<Route.Main> {
-                MainScreen()
+            composable<BottomRoute.Main> {
+                MainScreen(
+                    state = mainScreenState,
+                    onSearchFieldClick = {
+                        navHostController.navigate(Route.SearchRecipe) {
+                            popUpTo(Route.BottomNav) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    },
+                )
             }
-            composable<Route.Bookmark> {
-                SavedRecipesScreen(Modifier,savedRecipeState, onBookmarkClick)
+            composable<BottomRoute.Bookmark> {
+                SavedRecipesScreen(Modifier, savedRecipeState, onBookmarkClick)
             }
-            composable<Route.Third> {
+            composable<BottomRoute.Third> {
                 ThirdScreen()
             }
-            composable<Route.Fourth> {
+            composable<BottomRoute.Fourth> {
                 FourthScreen()
             }
         }
     }
 }
 
-private sealed interface Route {
+sealed interface BottomRoute {
     @Serializable
-    data object Main : Route
+    data object Main : BottomRoute
 
     @Serializable
-    data object Bookmark : Route
+    data object Bookmark : BottomRoute
 
     @Serializable
-    data object Third : Route
+    data object Third : BottomRoute
 
     @Serializable
-    data object Fourth : Route
+    data object Fourth : BottomRoute
 }
 
 @Composable

@@ -9,11 +9,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.surivalcoding.composerecipeapp.presentation.NavigationRoot
+import com.surivalcoding.composerecipeapp.presentation.mainscreen.MainScreenViewModel
 import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeViewModel
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import org.koin.compose.viewmodel.koinViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -33,12 +32,18 @@ class MainActivity : ComponentActivity() {
             // Hilt viewModel
             val savedRecipeViewModel: SavedRecipeViewModel = hiltViewModel()
             val searchRecipeViewModel: SearchRecipeViewModel = hiltViewModel()
+            val mainScreenViewModel: MainScreenViewModel = hiltViewModel()
 
             val savedRecipeState by savedRecipeViewModel.state.collectAsStateWithLifecycle()
+            val searchRecipeState by searchRecipeViewModel.state.collectAsStateWithLifecycle()
+            val mainScreenState by mainScreenViewModel.state.collectAsStateWithLifecycle()
 
             NavigationRoot(
-                navController = navController,
+                navHostController = navController,
+                mainScreenState = mainScreenState,
                 savedRecipeState = savedRecipeState,
+                searchRecipeState = searchRecipeState,
+                onSearchInputChanged = { searchRecipeViewModel.onSearchQueryChanged(it) },
                 onBookmarkClick = { savedRecipeViewModel.cancelBookmark(it) }
             )
         }

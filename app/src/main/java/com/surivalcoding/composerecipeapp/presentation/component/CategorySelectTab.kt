@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.surivalcoding.composerecipeapp.domain.model.Category
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
@@ -47,17 +46,19 @@ fun CategorySelectTab(
         categories.forEach { category ->
             val isSelected = category == selectedCategory
 
-            // 탭 크기 설정: 'All'은 54.dp x 31.dp, 나머지는 76.dp x 31.dp
-            val tabWidth = if (category == Category.ALL) 54.dp else 76.dp
+            // 텍스트의 너비를 측정하기 위한 상태
+            var textWidth by remember { mutableStateOf(0) }
 
             Text(
                 text = category.displayName, // Enum의 displayName 사용
                 style = AppTextStyles.smallerTextBold,
                 color = if (isSelected) AppColors.white else AppColors.primary80,
                 textAlign = TextAlign.Center,
+                onTextLayout = { textLayoutResult ->
+                    // 텍스트의 너비를 측정하여 상태 업데이트
+                    textWidth = textLayoutResult.size.width
+                },
                 modifier = Modifier
-                    .padding()
-                    .width(tabWidth) // 폭 설정
                     .height(31.dp) // 높이 설정
                     .background(
                         color = if (isSelected) AppColors.primary100 else Color.Transparent,
@@ -67,7 +68,7 @@ fun CategorySelectTab(
                         selectedCategory = category
                         onCategorySelected(category) // 선택된 카테고리를 콜백으로 전달
                     }
-                    .padding(horizontal = 4.dp, vertical = 8.dp)
+                    .padding(horizontal = 20.dp, vertical = 7.dp)
             )
         }
     }

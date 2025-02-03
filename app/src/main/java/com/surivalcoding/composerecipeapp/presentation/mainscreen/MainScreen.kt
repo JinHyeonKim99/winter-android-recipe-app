@@ -23,19 +23,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.surivalcoding.composerecipeapp.R
 import com.surivalcoding.composerecipeapp.domain.model.Category
+import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.presentation.component.CategorySelectTab
 import com.surivalcoding.composerecipeapp.presentation.component.FilterButton
-import com.surivalcoding.composerecipeapp.presentation.component.MainRecipeCard
-import com.surivalcoding.composerecipeapp.presentation.component.SearchInputField
-import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipeState
+import com.surivalcoding.composerecipeapp.presentation.component.MainRecipeCardScroll
+import com.surivalcoding.composerecipeapp.presentation.component.MainScreenSearchInputField
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    state: SearchRecipeState = SearchRecipeState(),
-    onValueChange: (String) -> Unit = {},
+    state: MainScreenState = MainScreenState(),
+    onSearchFieldClick: () -> Unit = {},
     waitSavedRecipes: () -> Unit = {},
     categories: List<Category> = Category.entries,
 ) {
@@ -97,11 +97,10 @@ fun MainScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-                    SearchInputField(
+                    MainScreenSearchInputField(
                         modifier = Modifier.weight(255f),
-                        onValueChange = onValueChange,
                         placeholder = "Search recipe",
-                        value = state.query,
+                        onClick = onSearchFieldClick
                     )
 
                     FilterButton(
@@ -114,9 +113,8 @@ fun MainScreen(
                 categories = categories,
             )
 
-
-            MainRecipeCard(
-                recipe = state.recipes
+            MainRecipeCardScroll(
+                recipes = state.recipes
             )
         }
     }
@@ -125,5 +123,20 @@ fun MainScreen(
 @Preview
 @Composable
 private fun MainScreenPreview() {
-    MainScreen()
+    val recipe1 = Recipe(
+        "Italian",
+        1,
+        "Traditional spare ribs baked",
+        "https://www.foodnews.news/data/photos/20210728/art_16261398155074_8642d5.jpg",
+        "Chef John",
+        "20 min",
+        4.0,
+        emptyList(),
+    )
+    val recipes = listOf(recipe1, recipe1, recipe1, recipe1, recipe1)
+    val state = MainScreenState(recipes = recipes)
+
+    MainScreen(
+        state = state
+    )
 }

@@ -1,14 +1,9 @@
 package com.surivalcoding.composerecipeapp.presentation.search_recipes_screen
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.surivalcoding.composerecipeapp.AppApplication
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
-import com.surivalcoding.composerecipeapp.domain.GetSavedRecipesUseCase
+import com.surivalcoding.composerecipeapp.domain.GetSearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchRecipeViewModel @Inject constructor(
-    private val getSavedRecipesUseCase: GetSavedRecipesUseCase,
+    private val getSearchRecipesUseCase: GetSearchRecipesUseCase,
 ) : ViewModel() {
 //    private val _savedRecipes: MutableStateFlow<List<Recipe>> = MutableStateFlow(emptyList())
 //    val savedRecipes = _savedRecipes.asStateFlow()
@@ -34,7 +29,7 @@ class SearchRecipeViewModel @Inject constructor(
         viewModelScope.launch {
             _state.emit(
                 SearchRecipeState(
-                    recipes = getSavedRecipesUseCase.execute()
+                    recipes = getSearchRecipesUseCase.execute()
                 )
             )
         }
@@ -56,7 +51,7 @@ class SearchRecipeViewModel @Inject constructor(
                 )
             }
 
-            val allRecipes = getSavedRecipesUseCase.execute()
+            val allRecipes = getSearchRecipesUseCase.execute()
 
             performSearch(newQuery, allRecipes)
 
@@ -88,7 +83,7 @@ class SearchRecipeViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
 
-            val recipes = getSavedRecipesUseCase.execute()
+            val recipes = getSearchRecipesUseCase.execute()
 
             _state.update {
                 it.copy(
@@ -105,7 +100,7 @@ class SearchRecipeViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
 
             // Repository에서 데이터를 가져오기
-            val recipes = getSavedRecipesUseCase.execute()
+            val recipes = getSearchRecipesUseCase.execute()
 
             // 로딩 종료 및 상태 업데이트
             _state.update {

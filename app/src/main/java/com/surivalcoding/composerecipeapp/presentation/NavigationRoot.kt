@@ -7,7 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.surivalcoding.composerecipeapp.presentation.bottomscreen.BottomNavigationScreen
+import com.surivalcoding.composerecipeapp.presentation.mainscreen.MainScreenState
 import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeState
+import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipeState
+import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreen
 import com.surivalcoding.composerecipeapp.presentation.sign_in.SignInScreen
 import com.surivalcoding.composerecipeapp.presentation.sign_up.SignUpScreen
 import com.surivalcoding.composerecipeapp.presentation.splashscreen.SplashScreen
@@ -16,7 +19,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object AuthGraph
 
-private sealed interface Route {
+sealed interface Route {
     @Serializable
     data object Splash : Route
 
@@ -28,25 +31,47 @@ private sealed interface Route {
 
     @Serializable
     data object BottomNav : Route
+
+    @Serializable
+    data object SearchRecipe : Route
 }
 
 @Composable
 fun NavigationRoot(
-    navController: NavHostController,
+    navHostController: NavHostController,
+    mainScreenState: MainScreenState = MainScreenState(),
     savedRecipeState: SavedRecipeState = SavedRecipeState(),
+    searchRecipeState: SearchRecipeState = SearchRecipeState(),
+    onSearchInputChanged: (String) -> Unit = {},
     onBookmarkClick: (Int) -> Unit = {},
 ) {
     NavHost(
-        navController = navController,
+        navController = navHostController,
         startDestination = AuthGraph,
     ) {
-        authGraph(navController, savedRecipeState, onBookmarkClick)
+        authGraph(
+            navHostController,
+            mainScreenState,
+            savedRecipeState,
+            searchRecipeState,
+            onSearchInputChanged,
+            onBookmarkClick
+        )
+
+        composable<Route.SearchRecipe> {
+            SearchRecipesScreen(
+                state = searchRecipeState,
+            )
+        }
     }
 }
 
 private fun NavGraphBuilder.authGraph(
     navHostController: NavHostController,
+    mainScreenState: MainScreenState = MainScreenState(),
     savedRecipeState: SavedRecipeState = SavedRecipeState(),
+    searchRecipeState: SearchRecipeState = SearchRecipeState(),
+    onSearchInputChanged: (String) -> Unit = {},
     onBookmarkClick: (Int) -> Unit = {},
 ) {
     navigation<AuthGraph>(
@@ -95,11 +120,18 @@ private fun NavGraphBuilder.authGraph(
                 }
             )
         }
-
         composable<Route.BottomNav> {
             BottomNavigationScreen(
+                navHostController = navHostController,
+                mainScreenState = mainScreenState,
                 savedRecipeState = savedRecipeState,
                 onBookmarkClick = onBookmarkClick
+            )
+        }
+        composable<Route.SearchRecipe> {
+            SearchRecipesScreen(
+                state = searchRecipeState,
+                onValueChange = onSearchInputChanged
             )
         }
     }

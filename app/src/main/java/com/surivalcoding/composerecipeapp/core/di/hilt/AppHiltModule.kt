@@ -16,7 +16,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class AppHiltModule {
 
-    @Singleton
-    @Binds
-    abstract fun provideCategory(category: Category): Category
+//    @Singleton
+//    @Provides
+//    fun provideCategory(category: Category): Category {
+//        return Category.ALL
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideCancelBookmarkUseCase(bookmarkRepository: BookmarkRepository): CancelBookmarkUseCase {
+//        return CancelBookmarkUseCase(
+//            bookmarkRepository = bookmarkRepository
+//        )
+//    }
 }

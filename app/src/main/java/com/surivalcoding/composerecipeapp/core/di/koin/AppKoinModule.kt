@@ -32,7 +32,7 @@ val appModule = module {
 
     viewModel {
         SearchRecipeViewModel(
-            getSavedRecipesUseCase = get()
+            getSearchRecipesUseCase = get()
         )
     }
 }
