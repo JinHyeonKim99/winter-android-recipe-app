@@ -7,12 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,12 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.surivalcoding.composerecipeapp.domain.model.Category
+import com.surivalcoding.composerecipeapp.data.filter.Category
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
 @Composable
-fun CategorySelectTab(
+fun CategoryScrollSelectTab(
     modifier: Modifier = Modifier,
     categories: List<Category>,  // 카테고리를 Enum 리스트로 받음
     onCategorySelected: (Category) -> Unit = {},// 선택한 카테고리를 반환
@@ -38,7 +35,7 @@ fun CategorySelectTab(
     val scrollState = rememberScrollState()
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .horizontalScroll(scrollState),
         verticalAlignment = Alignment.CenterVertically
@@ -77,7 +74,7 @@ fun CategorySelectTab(
 @Preview(showBackground = true)
 @Composable
 private fun CategorySelectTabPreview() {
-    CategorySelectTab(
+    CategoryScrollSelectTab(
         categories = Category.entries,
         onCategorySelected = {}
     )

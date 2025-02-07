@@ -29,12 +29,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.surivalcoding.composerecipeapp.R
 import com.surivalcoding.composerecipeapp.presentation.Route
-import com.surivalcoding.composerecipeapp.presentation.mainscreen.MainScreen
-import com.surivalcoding.composerecipeapp.presentation.mainscreen.MainScreenState
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreen
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
 import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeState
 import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipesScreen
-import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipeState
-import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreen
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import kotlinx.serialization.Serializable
 

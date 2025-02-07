@@ -4,46 +4,35 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.surivalcoding.composerecipeapp.R
+import com.surivalcoding.composerecipeapp.data.filter.Time
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.presentation.component.SearchInputField
 import com.surivalcoding.composerecipeapp.presentation.component.SearchRecipeCard
+import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.filter_search_bottom_sheet.FilterBottomSheet
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
 @Composable
 fun SearchRecipesScreen(
     modifier: Modifier = Modifier,
-    state: SearchRecipeState = SearchRecipeState(),
-    onValueChange: (String) -> Unit = {},
-    waitSavedRecipes: () -> Unit = {},
+    state: SearchRecipesState,
+    onAction: (SearchRecipesAction) -> Unit = {},
 ) {
     Scaffold(
         modifier = modifier,
@@ -69,33 +58,37 @@ fun SearchRecipesScreen(
                 ) {
                     SearchInputField(
                         modifier = Modifier.weight(255f),
-                        onValueChange = onValueChange,
+                        onValueChange = { onAction(SearchRecipesAction.InputQueryChange(it)) },
                         placeholder = "Search recipe",
                         value = state.query,
                     )
 
-                    Button(
-                        modifier = Modifier
-                            .size(40.dp)
-                            .weight(40f)
-                            .background(
-                                color = AppColors.primary100,
-                                shape = RoundedCornerShape(size = 10.dp)
-                            ),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Transparent,
-                        ),
-
-                        contentPadding = PaddingValues(0.dp),
-                        onClick = {},
-                    ) {
-                        Icon(
-                            modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = R.drawable.filter_icon),
-                            contentDescription = null,
-                            tint = AppColors.white,
-                        )
-                    }
+                    FilterBottomSheet(
+                        state = state,
+                        onAction = onAction
+                    )
+//                    Button(
+//                        modifier = Modifier
+//                            .size(40.dp)
+//                            .weight(40f)
+//                            .background(
+//                                color = AppColors.primary100,
+//                                shape = RoundedCornerShape(size = 10.dp)
+//                            ),
+//                        colors = ButtonDefaults.buttonColors(
+//                            containerColor = Color.Transparent,
+//                        ),
+//
+//                        contentPadding = PaddingValues(0.dp),
+//                        onClick = {},
+//                    ) {
+//                        Icon(
+//                            modifier = Modifier.size(20.dp),
+//                            painter = painterResource(id = R.drawable.filter_icon),
+//                            contentDescription = null,
+//                            tint = AppColors.white,
+//                        )
+//                    }
                 }
 
             }
@@ -122,7 +115,7 @@ fun SearchRecipesScreen(
                                 color = AppColors.font
                             ),
                         )
-                        if(state.isSearching) {
+                        if (state.isSearching) {
                             Text(
                                 text = "${state.searchResultCount} results",
                                 style = AppTextStyles.smallerTextRegular.copy(
@@ -195,6 +188,8 @@ private fun SearchRecipesScreenPreview() {
     )
 
     SearchRecipesScreen(
-        state = SearchRecipeState(recipes)
+        state = SearchRecipesState(
+            recipes = recipes,
+        )
     )
 }

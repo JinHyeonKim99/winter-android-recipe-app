@@ -15,5 +15,4 @@ abstract class ProdModule {
     @Singleton
     @Binds
     abstract fun provideRecipeDataSource(recipeDataSourceImpl: MockProdRecipeDataSourceImpl): RecipeDataSource
-
 }

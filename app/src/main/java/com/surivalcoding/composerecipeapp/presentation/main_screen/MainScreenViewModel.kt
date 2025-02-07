@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.presentation.mainscreen
+package com.surivalcoding.composerecipeapp.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

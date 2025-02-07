@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.presentation.mainscreen
+package com.surivalcoding.composerecipeapp.presentation.main_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.surivalcoding.composerecipeapp.R
-import com.surivalcoding.composerecipeapp.domain.model.Category
+import com.surivalcoding.composerecipeapp.data.filter.Category
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
-import com.surivalcoding.composerecipeapp.presentation.component.CategorySelectTab
+import com.surivalcoding.composerecipeapp.presentation.component.CategoryScrollSelectTab
 import com.surivalcoding.composerecipeapp.presentation.component.FilterButton
 import com.surivalcoding.composerecipeapp.presentation.component.MainRecipeCardScroll
 import com.surivalcoding.composerecipeapp.presentation.component.MainScreenSearchInputField
@@ -109,7 +109,7 @@ fun MainScreen(
                 }
             }
 
-            CategorySelectTab(
+            CategoryScrollSelectTab(
                 categories = categories,
             )
 

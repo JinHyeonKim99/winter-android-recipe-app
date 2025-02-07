@@ -16,15 +16,16 @@ import com.surivalcoding.composerecipeapp.ui.AppColors
 @Composable
 fun FilterButton(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     Icon(
-        modifier = Modifier
+        modifier = modifier
             .size(40.dp)
             .background(
                 color = AppColors.primary100,
                 shape = RoundedCornerShape(10.dp)
             ).padding(10.dp)
-            .clickable { },
+            .clickable { onClick() },
         painter = painterResource(id = R.drawable.filter_icon),
         contentDescription = null,
         tint = AppColors.white,

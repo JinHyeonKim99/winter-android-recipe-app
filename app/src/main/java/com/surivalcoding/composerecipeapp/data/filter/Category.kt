@@ -1,6 +1,6 @@
-package com.surivalcoding.composerecipeapp.domain.model
+package com.surivalcoding.composerecipeapp.data.filter
 
-enum class Category(val displayName: String) {
+enum class Category(override val displayName: String) : FilterType {
     ALL("All"),
     INDIAN("Indian"),
     ITALIAN("Italian"),
