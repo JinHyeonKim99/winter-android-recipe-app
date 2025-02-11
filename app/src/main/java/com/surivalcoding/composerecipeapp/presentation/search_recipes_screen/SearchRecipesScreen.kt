@@ -67,28 +67,6 @@ fun SearchRecipesScreen(
                         state = state,
                         onAction = onAction
                     )
-//                    Button(
-//                        modifier = Modifier
-//                            .size(40.dp)
-//                            .weight(40f)
-//                            .background(
-//                                color = AppColors.primary100,
-//                                shape = RoundedCornerShape(size = 10.dp)
-//                            ),
-//                        colors = ButtonDefaults.buttonColors(
-//                            containerColor = Color.Transparent,
-//                        ),
-//
-//                        contentPadding = PaddingValues(0.dp),
-//                        onClick = {},
-//                    ) {
-//                        Icon(
-//                            modifier = Modifier.size(20.dp),
-//                            painter = painterResource(id = R.drawable.filter_icon),
-//                            contentDescription = null,
-//                            tint = AppColors.white,
-//                        )
-//                    }
                 }
 
             }
@@ -115,7 +93,7 @@ fun SearchRecipesScreen(
                                 color = AppColors.font
                             ),
                         )
-                        if (state.isSearching) {
+                        if (state.isSearching || state.isFiltering) {
                             Text(
                                 text = "${state.searchResultCount} results",
                                 style = AppTextStyles.smallerTextRegular.copy(
@@ -169,6 +147,7 @@ private fun SearchRecipesScreenPreview() {
         "Chef John",
         "20 min",
         4.0,
+        "",
         emptyList(),
     )
     val recipes = listOf(

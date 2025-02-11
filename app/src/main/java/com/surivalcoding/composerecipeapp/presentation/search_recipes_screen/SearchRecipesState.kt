@@ -13,6 +13,7 @@ data class SearchRecipesState(
     val searchScreenText: String = "Recent Search",
     val searchResultCount: Int = 0,
     val isLoading: Boolean = false,
+    val isFiltering : Boolean = false,
     val onFilterTabSelected: (FilterType) -> Unit = {},
     val isTimeSelected: Boolean = false,
     val isRateSelected: Boolean = false,

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.surivalcoding.composerecipeapp.AppApplication
 import com.surivalcoding.composerecipeapp.domain.GetSavedRecipesUseCase
+import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,16 +26,21 @@ class SavedRecipeViewModel @Inject constructor(
 
     init {
         fetchSavedRecipes()
-
-//        viewModelScope.launch {
-//            val recipes = savedRecipeRepository.getRecipes()
-//            _savedRecipes.value = recipes
-
-//            _savedRecipes.emit(savedRecipeRepository.getRecipes())
-//        }
     }
 
-    fun cancelBookmark(id: Int) {
+    fun onAction(action: SavedRecipesAction) {
+        when (action) {
+            is SavedRecipesAction.OnClickBookmarkButton -> {
+                onBookmarkClick(action.id)
+            }
+
+            is SavedRecipesAction.OnRecipeClick -> {
+            }
+
+        }
+    }
+
+    private fun onBookmarkClick(id: Int) {
         viewModelScope.launch {
             val recipes = getSavedRecipesUseCase.execute(id)
 
@@ -43,6 +49,12 @@ class SavedRecipeViewModel @Inject constructor(
                     savedRecipes = recipes
                 )
             }
+        }
+    }
+
+    private fun onRecipeClick() {
+        viewModelScope.launch {
+
         }
     }
 

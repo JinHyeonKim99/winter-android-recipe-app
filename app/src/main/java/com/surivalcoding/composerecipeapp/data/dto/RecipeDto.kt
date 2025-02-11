@@ -12,5 +12,6 @@ data class RecipeDto(
     val chef: String? = null,
     @SerialName("time") val cookingDuration: String? = null,
     @SerialName("rating") val starRate: Double? = null,
+    @SerialName("date") val createdAt: String? = null,
     val ingredients: List<IngredientDto>? = null,
 )

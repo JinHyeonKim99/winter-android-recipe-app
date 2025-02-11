@@ -6,6 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.rememberNavController
+import com.surivalcoding.composerecipeapp.presentation.NavigationRoot
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenViewModel
+import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeViewModel
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesViewModel
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreen
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreenRoot
@@ -16,32 +20,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            val navController = rememberNavController()
-//
-//            // viewModels 구글 제공, viewModel 컴포즈 제공
-////            val savedRecipeViewModel: SavedRecipeViewModel = viewModel(
-////                factory = SavedRecipeViewModel.Factory
-////            )
-//
-//            // koin viewModel
-////            val savedRecipeViewModel: SavedRecipeViewModel = koinViewModel()
-//
-//            // Hilt viewModel
-//            val savedRecipeViewModel: SavedRecipeViewModel = hiltViewModel()
-//            val mainScreenViewModel: MainScreenViewModel = hiltViewModel()
-//
-//            val savedRecipeState by savedRecipeViewModel.state.collectAsStateWithLifecycle()
-//            val mainScreenState by mainScreenViewModel.state.collectAsStateWithLifecycle()
-//
-//            NavigationRoot(
-//                navHostController = navController,
-//                mainScreenState = mainScreenState,
-//                savedRecipeState = savedRecipeState,
-//                searchRecipeState = searchRecipeState,
-//                onSearchInputChanged = { searchRecipeViewModel.onSearchQueryChanged(it) },
-//                onBookmarkClick = { savedRecipeViewModel.cancelBookmark(it) }
-//            )
-            SearchRecipesScreenRoot()
+            val navController = rememberNavController()
+
+            // Hilt viewModel
+            val savedRecipeViewModel: SavedRecipeViewModel = hiltViewModel()
+            val mainScreenViewModel: MainScreenViewModel = hiltViewModel()
+
+            val savedRecipeState by savedRecipeViewModel.state.collectAsStateWithLifecycle()
+            val mainScreenState by mainScreenViewModel.state.collectAsStateWithLifecycle()
+
+            NavigationRoot(
+                navHostController = navController,
+                mainScreenState = mainScreenState,
+                savedRecipeState = savedRecipeState,
+                onBookmarkClick = { savedRecipeViewModel.cancelBookmark(it) }
+            )
         }
     }
 }

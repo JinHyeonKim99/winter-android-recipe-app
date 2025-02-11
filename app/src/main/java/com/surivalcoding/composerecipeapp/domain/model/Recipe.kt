@@ -10,11 +10,11 @@ data class Recipe(
     val chef: String? = "By Chef",
     @SerialName("time") val cookingDuration: String,
     @SerialName("rating") val starRate: Double,
+    @SerialName("date") val createdAt: String,
     val ingredients: List<Ingredient>,
 ) {
     val procedure: String = ""
     val editedAt: String = ""
-    val createdAy: String = ""
     val savedCount: String = ""
     val serving: String = ""
     val videoUrl: String = ""

@@ -2,7 +2,10 @@ package com.surivalcoding.composerecipeapp.presentation.search_recipes_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.surivalcoding.composerecipeapp.data.filter.Category
 import com.surivalcoding.composerecipeapp.data.filter.FilterType
+import com.surivalcoding.composerecipeapp.data.filter.Rate
+import com.surivalcoding.composerecipeapp.data.filter.Time
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.domain.GetSearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +23,22 @@ class SearchRecipesViewModel @Inject constructor(
         MutableStateFlow(SearchRecipesState())
     val state = _state.asStateFlow()
 
+    private var initialRecipes: List<Recipe> = emptyList()  // 초기 리스트 저장
+    private var filteredRecipes: List<Recipe> = emptyList() // 필터 적용된 리스트
+    private var searchedRecipes: List<Recipe> = emptyList() // 검색 결과 리스트
+
     init {
         fetchRecipes()
+    }
+
+    private fun fetchRecipes() {
+        viewModelScope.launch {
+            val recipes = getSearchRecipesUseCase.execute()
+            initialRecipes = recipes
+            filteredRecipes = recipes
+            searchedRecipes = recipes
+            _state.emit(SearchRecipesState(recipes = recipes))
+        }
     }
 
     fun onAction(action: SearchRecipesAction) {
@@ -52,139 +69,116 @@ class SearchRecipesViewModel @Inject constructor(
         }
     }
 
-    //val isSelected = filterType == selectedFilterTab
-    private fun fetchRecipes() {
-        viewModelScope.launch {
-            _state.emit(
-                SearchRecipesState(
-                    recipes = getSearchRecipesUseCase.execute(),
-                    selectedTimeTab = _state.value.selectedTimeTab,
-                    selectedCategoryTab = _state.value.selectedCategoryTab,
-                    timeFilterList = _state.value.timeFilterList,
-                    rateFilterList = _state.value.rateFilterList,
-                    categoryFilterList = _state.value.categoryFilterList,
-                    isTimeSelected = _state.value.isTimeSelected,
-                    isRateSelected = _state.value.isRateSelected,
-                    isCategorySelected = _state.value.isCategorySelected,
-
-                )
-            )
-        }
-    }
-
-    // 검색 결과 리스트
-    private var recipes = MutableStateFlow(listOf<Recipe>())
-
-    private var screenText = MutableStateFlow<String>("Recent Search")
-    private var isSearching = MutableStateFlow<Boolean>(false)
-
-    // 검색어 변경 처리
     private fun onSearchQueryChanged(newQuery: String) {
         viewModelScope.launch {
             _state.update {
-                it.copy(
-                    query = newQuery,
-                    searchScreenText = "Search Result",
-                    isSearching = isSearching.value,
-                )
+                it.copy(query = newQuery, isSearching = true)
             }
-
-            val allRecipes = getSearchRecipesUseCase.execute()
-
-            performSearch(newQuery, allRecipes)
-
-            _state.update {
-                it.copy(
-                    recipes = recipes.value,
-                    searchScreenText = screenText.value,
-                    searchResultCount = recipes.value.size,
-                    isSearching = isSearching.value
-                )
-            }
+            performSearch(newQuery)
         }
     }
 
-    // 검색 수행 로직
-    private fun performSearch(query: String, allRecipes: List<Recipe>) {
-        if (query.isEmpty()) {
-            recipes.value = allRecipes
-            screenText.value = "Recent Search"
-            isSearching.value = false
-        } else {
-            recipes.value = allRecipes.filter { it.title.contains(query, ignoreCase = true) }
-            screenText.value = "Search Result"
-            isSearching.value = true
+    private fun performSearch(query: String) {
+        viewModelScope.launch {
+            searchedRecipes = if (query.isEmpty()) {
+                _state.update {
+                    it.copy(isSearching = false)
+                }
+                if (_state.value.isFiltering) {
+                    filteredRecipes  // 필터 유지한 채 검색 초기화
+                } else {
+                    initialRecipes  // 원본 리스트 복원
+                }
+            } else {
+                filteredRecipes.filter { it.title.contains(query, ignoreCase = true) }
+            }
+
+            _state.update {
+                it.copy(
+                    recipes = searchedRecipes,
+                    searchResultCount = searchedRecipes.size,
+                    searchScreenText = if (_state.value.isSearching || _state.value.isFiltering) "Search Result" else "Recent Search",
+                )
+            }
         }
     }
 
     private fun onFilterIconButtonClicked() {
         viewModelScope.launch {
-            println("필터 아이콘")
-            _state.update {
-                it.copy(
-                    showBottomSheet = !_state.value.showBottomSheet,
-                )
-            }
+            _state.update { it.copy(showBottomSheet = !_state.value.showBottomSheet) }
         }
     }
 
     private fun onFilterButtonClicked() {
         viewModelScope.launch {
-            println("필터 버튼")
+            val categoryIsAll = _state.value.selectedCategoryTab == Category.ALL
+            val rateIsAll = _state.value.selectedRateTab == Rate.ALL
+            val timeIsAll = _state.value.selectedTimeTab == Time.ALL
+
+            // 필터 적용
+            filteredRecipes = initialRecipes.filter { recipe ->
+                val matchesCategory =
+                    categoryIsAll || recipe.category == _state.value.selectedCategoryTab.displayName
+                val matchesRate =
+                    rateIsAll || recipe.starRate >= _state.value.selectedRateTab.displayName.toDouble()
+                matchesCategory && matchesRate
+            }
+
+            filteredRecipes = when (_state.value.selectedTimeTab) {
+                Time.NEWEST -> filteredRecipes.sortedByDescending { it.createdAt }
+                Time.OLDEST -> filteredRecipes.sortedBy { it.createdAt }
+                else -> filteredRecipes
+            }
+
+            // 필터 해제 시 원래 상태로 복구
+            if (timeIsAll && rateIsAll && categoryIsAll) {
+                filteredRecipes = initialRecipes
+                _state.update { it.copy(isFiltering = false) }
+            } else {
+                _state.update { it.copy(isFiltering = true) }
+            }
+
+            // 필터 후 검색 상태 반영
+            searchedRecipes = if (_state.value.query.isEmpty()) {
+                filteredRecipes
+            } else {
+                filteredRecipes.filter { it.title.contains(_state.value.query, ignoreCase = true) }
+            }
+
             _state.update {
                 it.copy(
-                    showBottomSheet = !_state.value.showBottomSheet,
+                    recipes = searchedRecipes,
+                    searchResultCount = searchedRecipes.size,
+                    showBottomSheet = false,
+                    searchScreenText = if (_state.value.isSearching || _state.value.isFiltering) "Search Result" else "Recent Search",
                 )
             }
+            println(searchedRecipes.size)
         }
     }
 
     private fun onTimeFilterTabSelected(filterTab: FilterType) {
         viewModelScope.launch {
-            println("time 필터 탭")
-            println(filterTab)
-            println(_state.value.selectedTimeTab)
-            _state.update {
-                it.copy(
-                    selectedTimeTab = filterTab,
-                )
-            }
-            println(_state.value.selectedTimeTab)
+            _state.update { it.copy(selectedTimeTab = filterTab) }
         }
     }
 
     private fun onRateFilterTabSelected(filterTab: FilterType) {
         viewModelScope.launch {
-            println("Rate 필터 탭")
-            println(filterTab)
-            println(_state.value.selectedTimeTab)
+            val currentRateTab = _state.value.selectedRateTab
             println(_state.value.selectedRateTab)
-            println(_state.value.selectedCategoryTab)
-            println(_state.value.isRateSelected)
             _state.update {
                 it.copy(
-                    selectedRateTab = filterTab,
-                    isRateSelected = !_state.value.isRateSelected,
+                    selectedRateTab = if (currentRateTab == filterTab) Rate.ALL else filterTab
                 )
             }
-            println(_state.value.selectedTimeTab)
             println(_state.value.selectedRateTab)
-            println(_state.value.selectedCategoryTab)
-            println(_state.value.isRateSelected)
         }
     }
 
     private fun onCategoryFilterTabSelected(filterTab: FilterType) {
         viewModelScope.launch {
-            println("Category 필터 탭")
-            println(filterTab)
-            println(_state.value.selectedCategoryTab)
-            _state.update {
-                it.copy(
-                    selectedCategoryTab = filterTab,
-                )
-            }
-            println(_state.value.selectedCategoryTab)
+            _state.update { it.copy(selectedCategoryTab = filterTab) }
         }
     }
 }

@@ -156,6 +156,7 @@ private fun SearchRecipeCardPreview() {
         "Chef John",
         "20 min",
         4.0,
+        "",
         emptyList(),
     )
 

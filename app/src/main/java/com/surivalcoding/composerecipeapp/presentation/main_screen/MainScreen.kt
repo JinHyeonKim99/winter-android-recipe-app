@@ -131,6 +131,7 @@ private fun MainScreenPreview() {
         "Chef John",
         "20 min",
         4.0,
+        "",
         emptyList(),
     )
     val recipes = listOf(recipe1, recipe1, recipe1, recipe1, recipe1)

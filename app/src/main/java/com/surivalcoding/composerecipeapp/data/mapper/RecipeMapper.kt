@@ -13,6 +13,7 @@ fun RecipeDto.toRecipe() = Recipe(
     chef = chef ?: "",
     cookingDuration = cookingDuration ?: "",
     starRate = starRate ?: 0.0,
+    createdAt = createdAt ?: "",
     ingredients = ingredients?.map { it.toIngredient() } ?: emptyList()
 )
 
