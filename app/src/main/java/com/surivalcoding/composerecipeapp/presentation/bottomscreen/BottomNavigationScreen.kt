@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigation
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,20 +31,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.surivalcoding.composerecipeapp.R
 import com.surivalcoding.composerecipeapp.presentation.Route
-import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreen
-import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
-import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeState
-import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipesScreen
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenRoot
+import com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen.SavedRecipesScreenRoot
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import kotlinx.serialization.Serializable
 
 
 @Composable
 fun BottomNavigationScreen(
-    savedRecipeState: SavedRecipeState = SavedRecipeState(),
-    mainScreenState: MainScreenState = MainScreenState(),
-    onBookmarkClick: (Int) -> Unit = {},
-    onFocusedChange: (Int) -> Unit = {},
     modifier: Modifier = Modifier,
     navHostController: NavHostController = rememberNavController() // NavigationRoot의 NavController를 전달받음
 ) {
@@ -164,20 +160,27 @@ fun BottomNavigationScreen(
             startDestination = BottomRoute.Main,
         ) {
             composable<BottomRoute.Main> {
-                MainScreen(
-                    state = mainScreenState,
+                MainScreenRoot(
                     onSearchFieldClick = {
                         navHostController.navigate(Route.SearchRecipe) {
-                            popUpTo(Route.BottomNav) {
-                                inclusive = true
-                            }
                             launchSingleTop = true
                         }
                     },
+                    onRecipeCardClick = {
+                        navHostController.navigate(Route.RecipeDetail) {
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
             composable<BottomRoute.Bookmark> {
-                SavedRecipesScreen(Modifier, savedRecipeState, onBookmarkClick)
+                SavedRecipesScreenRoot(
+                    onClickRecipeButton = {
+                        navHostController.navigate(Route.SavedRecipe) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
             }
             composable<BottomRoute.Third> {
                 ThirdScreen()

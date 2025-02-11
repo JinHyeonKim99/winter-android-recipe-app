@@ -6,11 +6,17 @@ import javax.inject.Inject
 
 class GetSavedRecipesUseCase @Inject constructor(
     private val recipeRepository: RecipeRepository,
-    private val bookmarkUseCase: CancelBookmarkUseCase,
+    private val getBookmarkUseCase: GetBookmarkUseCase,
 ) {
     suspend fun execute(id: Int = 0): List<Recipe> {
-        return recipeRepository.getRecipes().filter {
-            it.id in bookmarkUseCase.execute(id)
+        return if (id == 0) {
+            recipeRepository.getRecipes().filter {
+                it.id in getBookmarkUseCase.execute().getBookmarkId()
+            }
+        } else {
+            recipeRepository.getRecipes().filter {
+                it.id in getBookmarkUseCase.execute().cancelBookmarkId(id)
+            }
         }
     }
 }

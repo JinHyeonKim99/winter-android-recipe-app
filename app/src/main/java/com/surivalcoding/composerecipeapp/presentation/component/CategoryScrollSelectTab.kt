@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.surivalcoding.composerecipeapp.data.filter.Category
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainAction
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
@@ -29,7 +30,7 @@ import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 fun CategoryScrollSelectTab(
     modifier: Modifier = Modifier,
     categories: List<Category>,  // 카테고리를 Enum 리스트로 받음
-    onCategorySelected: (Category) -> Unit = {},// 선택한 카테고리를 반환
+    onAction: (MainAction) -> Unit = {},// 선택한 카테고리를 반환
 ) {
     var selectedCategory by remember { mutableStateOf(categories.first()) }
     val scrollState = rememberScrollState()
@@ -63,7 +64,7 @@ fun CategoryScrollSelectTab(
                     )
                     .clickable {
                         selectedCategory = category
-                        onCategorySelected(category) // 선택된 카테고리를 콜백으로 전달
+                        onAction(MainAction.OnClickCategoryTab(category)) // 선택된 카테고리를 콜백으로 전달
                     }
                     .padding(horizontal = 20.dp, vertical = 7.dp)
             )
@@ -76,6 +77,6 @@ fun CategoryScrollSelectTab(
 private fun CategorySelectTabPreview() {
     CategoryScrollSelectTab(
         categories = Category.entries,
-        onCategorySelected = {}
+        onAction = {}
     )
 }

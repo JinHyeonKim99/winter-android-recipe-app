@@ -5,19 +5,28 @@ import com.surivalcoding.composerecipeapp.data.mapper.toUser
 import com.surivalcoding.composerecipeapp.domain.repository.BookmarkRepository
 import javax.inject.Inject
 
-class BookmarkRepositoryImpl @Inject constructor (private val dataSource: UserDataSource): BookmarkRepository {
+class BookmarkRepositoryImpl @Inject constructor(
+    private val dataSource: UserDataSource,
+) : BookmarkRepository {
+    // mock 데이터라서 사용한 변수들
     private var bookmarkList = mutableListOf<Int>()
+    private var isStarted = true
 
     override suspend fun getBookmarkId(): List<Int> {
-        return dataSource.getAllUsers().map { it.toUser() }[0].savedRecipesId
+        if (isStarted) {
+            isStarted = false
+            bookmarkList = dataSource.getAllUsers().map {
+                it.toUser()
+            }[0].savedRecipesId.toMutableList()
+        } else {
+            bookmarkList
+        }
+
+        return bookmarkList
     }
 
     override suspend fun cancelBookmarkId(id: Int): List<Int> {
-        if (id != 0) {
-            bookmarkList.add(id)
-            return getBookmarkId().filter { it !in bookmarkList }
-        } else {
-            return getBookmarkId()
-        }
+        bookmarkList.remove(id)
+        return bookmarkList
     }
 }

@@ -5,12 +5,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.surivalcoding.composerecipeapp.presentation.bottomscreen.BottomNavigationScreen
-import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
-import com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen.SavedRecipeState
-import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesState
-import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreen
+import com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen.SavedRecipesScreenRoot
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreenRoot
 import com.surivalcoding.composerecipeapp.presentation.sign_in.SignInScreen
 import com.surivalcoding.composerecipeapp.presentation.sign_up.SignUpScreen
@@ -35,32 +33,30 @@ sealed interface Route {
 
     @Serializable
     data object SearchRecipe : Route
+
+    @Serializable
+    data object SavedRecipe : Route
+
+    @Serializable
+    data object RecipeDetail : Route
 }
 
 @Composable
-fun NavigationRoot(
-    navHostController: NavHostController,
-    mainScreenState: MainScreenState = MainScreenState(),
-    savedRecipeState: SavedRecipeState = SavedRecipeState(),
-    onBookmarkClick: (Int) -> Unit = {},
-) {
+fun NavigationRoot() {
+    val navHostController: NavHostController = rememberNavController()
+
     NavHost(
         navController = navHostController,
         startDestination = AuthGraph,
     ) {
         authGraph(
             navHostController,
-            mainScreenState,
-            savedRecipeState,
         )
     }
 }
 
 private fun NavGraphBuilder.authGraph(
     navHostController: NavHostController,
-    mainScreenState: MainScreenState = MainScreenState(),
-    savedRecipeState: SavedRecipeState = SavedRecipeState(),
-    onBookmarkClick: (Int) -> Unit = {},
 ) {
     navigation<AuthGraph>(
         startDestination = Route.Splash
@@ -111,13 +107,16 @@ private fun NavGraphBuilder.authGraph(
         composable<Route.BottomNav> {
             BottomNavigationScreen(
                 navHostController = navHostController,
-                mainScreenState = mainScreenState,
-                savedRecipeState = savedRecipeState,
-                onBookmarkClick = onBookmarkClick
             )
         }
         composable<Route.SearchRecipe> {
             SearchRecipesScreenRoot()
+        }
+        composable<Route.SavedRecipe> {
+            SavedRecipesScreenRoot()
+        }
+        composable<Route.RecipeDetail> {
+
         }
     }
 }

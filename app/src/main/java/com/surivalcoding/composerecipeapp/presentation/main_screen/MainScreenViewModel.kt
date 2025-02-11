@@ -2,6 +2,7 @@ package com.surivalcoding.composerecipeapp.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.surivalcoding.composerecipeapp.domain.GetSavedRecipesUseCase
 import com.surivalcoding.composerecipeapp.domain.repository.RecipeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
+    private val getSavedRecipesUseCase: GetSavedRecipesUseCase,
     private val recipeRepository: RecipeRepository,
 ) : ViewModel() {
     private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState())
@@ -19,6 +21,15 @@ class MainScreenViewModel @Inject constructor(
 
     init {
         fetchRecipes()
+    }
+
+    fun onAction(action: MainAction) {
+        when (action) {
+            is MainAction.OnClickBookmarkButton -> {}
+            is MainAction.OnClickCategoryTab -> {}
+            MainAction.OnClickRecipeCard -> {}
+            MainAction.OnClickSearchField -> {}
+        }
     }
 
     private fun fetchRecipes() {
@@ -33,6 +44,18 @@ class MainScreenViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     isLoading = false,
+                    recipes = recipes
+                )
+            }
+        }
+    }
+
+    private fun onBookmarkClick(id: Int) {
+        viewModelScope.launch {
+            val recipes = getSavedRecipesUseCase.execute(id)
+
+            _state.update {
+                it.copy(
                     recipes = recipes
                 )
             }

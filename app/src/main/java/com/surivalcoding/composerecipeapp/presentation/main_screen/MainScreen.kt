@@ -22,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.surivalcoding.composerecipeapp.R
-import com.surivalcoding.composerecipeapp.data.filter.Category
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.presentation.component.CategoryScrollSelectTab
 import com.surivalcoding.composerecipeapp.presentation.component.FilterButton
@@ -35,9 +34,7 @@ import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 fun MainScreen(
     modifier: Modifier = Modifier,
     state: MainScreenState = MainScreenState(),
-    onSearchFieldClick: () -> Unit = {},
-    waitSavedRecipes: () -> Unit = {},
-    categories: List<Category> = Category.entries,
+    onAction: (MainAction) -> Unit = {},
 ) {
     Box(
         modifier = modifier
@@ -100,7 +97,9 @@ fun MainScreen(
                     MainScreenSearchInputField(
                         modifier = Modifier.weight(255f),
                         placeholder = "Search recipe",
-                        onClick = onSearchFieldClick
+                        onClick = {
+                            onAction(MainAction.OnClickSearchField)
+                        }
                     )
 
                     FilterButton(
@@ -110,7 +109,8 @@ fun MainScreen(
             }
 
             CategoryScrollSelectTab(
-                categories = categories,
+                categories = state.categories,
+                onAction = onAction
             )
 
             MainRecipeCardScroll(

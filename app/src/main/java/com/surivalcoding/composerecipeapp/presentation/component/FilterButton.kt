@@ -2,6 +2,7 @@ package com.surivalcoding.composerecipeapp.presentation.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +22,7 @@ fun FilterButton(
     Icon(
         modifier = modifier
             .size(40.dp)
+            .aspectRatio(1f)
             .background(
                 color = AppColors.primary100,
                 shape = RoundedCornerShape(10.dp)

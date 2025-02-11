@@ -1,14 +1,8 @@
-package com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen
+package com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.surivalcoding.composerecipeapp.AppApplication
 import com.surivalcoding.composerecipeapp.domain.GetSavedRecipesUseCase
-import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,9 +28,7 @@ class SavedRecipeViewModel @Inject constructor(
                 onBookmarkClick(action.id)
             }
 
-            is SavedRecipesAction.OnRecipeClick -> {
-            }
-
+            is SavedRecipesAction.OnClickRecipeCard -> {}
         }
     }
 
@@ -52,12 +44,6 @@ class SavedRecipeViewModel @Inject constructor(
         }
     }
 
-    private fun onRecipeClick() {
-        viewModelScope.launch {
-
-        }
-    }
-
     private fun fetchSavedRecipes() {
         viewModelScope.launch {
             // 로딩 시작
@@ -65,6 +51,7 @@ class SavedRecipeViewModel @Inject constructor(
 
             // Repository에서 데이터를 가져오기
             val recipes = getSavedRecipesUseCase.execute()
+
 
             // 로딩 종료 및 상태 업데이트
             _state.update {

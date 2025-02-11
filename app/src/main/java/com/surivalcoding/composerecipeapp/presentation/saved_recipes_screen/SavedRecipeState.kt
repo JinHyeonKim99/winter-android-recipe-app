@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.presentation.saved_recipe_screen
+package com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen
 
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 
