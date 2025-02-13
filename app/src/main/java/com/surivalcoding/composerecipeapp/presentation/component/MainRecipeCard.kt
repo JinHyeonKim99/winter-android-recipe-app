@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
@@ -31,6 +29,8 @@ import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.surivalcoding.composerecipeapp.R
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainAction
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
@@ -38,6 +38,8 @@ import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 fun MainRecipeCard(
     modifier: Modifier = Modifier,
     recipe: Recipe,
+    state: MainScreenState = MainScreenState(),
+    onAction: (MainAction) -> Unit = {},
 ) {
     Box(
         modifier = modifier
@@ -54,7 +56,8 @@ fun MainRecipeCard(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(top = 30.dp)
-                .zIndex(1f)
+                .zIndex(1f),
+            starRate = recipe.starRate
         )
 
         // 카드 콘텐츠
@@ -136,15 +139,14 @@ fun MainRecipeCard(
         }
 
         // 오른쪽 아래 Bookmark 아이콘
-        BookmarkIcon(
+        MainBookmarkIcon(
             modifier = Modifier
                 .align(Alignment.BottomEnd) // 오른쪽 아래 정렬
                 .padding(end = 10.dp, bottom = 10.dp) // 여백 추가
                 .zIndex(2f), // 가장 위에 표시
             recipeId = recipe.id, // recipe의 id를 전달
-            onBookmarkClick = { id ->
-                println("Bookmark clicked for recipe id: $id")
-            }
+            state = state,
+            onAction = onAction,
         )
     }
 }

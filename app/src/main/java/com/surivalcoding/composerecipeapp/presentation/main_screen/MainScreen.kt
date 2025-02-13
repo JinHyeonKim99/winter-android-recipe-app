@@ -109,12 +109,13 @@ fun MainScreen(
             }
 
             CategoryScrollSelectTab(
-                categories = state.categories,
+                state = state,
                 onAction = onAction
             )
 
             MainRecipeCardScroll(
-                recipes = state.recipes
+                state = state,
+                onAction = onAction,
             )
         }
     }

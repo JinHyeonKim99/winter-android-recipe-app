@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -23,16 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.surivalcoding.composerecipeapp.data.filter.Category
 import com.surivalcoding.composerecipeapp.presentation.main_screen.MainAction
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
 @Composable
 fun CategoryScrollSelectTab(
     modifier: Modifier = Modifier,
-    categories: List<Category>,  // 카테고리를 Enum 리스트로 받음
+    state: MainScreenState = MainScreenState(),
     onAction: (MainAction) -> Unit = {},// 선택한 카테고리를 반환
 ) {
-    var selectedCategory by remember { mutableStateOf(categories.first()) }
     val scrollState = rememberScrollState()
 
     Row(
@@ -41,16 +42,14 @@ fun CategoryScrollSelectTab(
             .horizontalScroll(scrollState),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        categories.forEach { category ->
-            val isSelected = category == selectedCategory
-
+        state.categories.forEach { category ->
             // 텍스트의 너비를 측정하기 위한 상태
-            var textWidth by remember { mutableStateOf(0) }
+            var textWidth by remember { mutableIntStateOf(0) }
 
             Text(
                 text = category.displayName, // Enum의 displayName 사용
                 style = AppTextStyles.smallerTextBold,
-                color = if (isSelected) AppColors.white else AppColors.primary80,
+                color = if (state.selectedCategory == category) AppColors.white else AppColors.primary80,
                 textAlign = TextAlign.Center,
                 onTextLayout = { textLayoutResult ->
                     // 텍스트의 너비를 측정하여 상태 업데이트
@@ -59,11 +58,10 @@ fun CategoryScrollSelectTab(
                 modifier = Modifier
                     .height(31.dp) // 높이 설정
                     .background(
-                        color = if (isSelected) AppColors.primary100 else Color.Transparent,
+                        color = if (state.selectedCategory == category) AppColors.primary100 else Color.Transparent,
                         shape = RoundedCornerShape(10.dp)
                     )
                     .clickable {
-                        selectedCategory = category
                         onAction(MainAction.OnClickCategoryTab(category)) // 선택된 카테고리를 콜백으로 전달
                     }
                     .padding(horizontal = 20.dp, vertical = 7.dp)
@@ -76,7 +74,7 @@ fun CategoryScrollSelectTab(
 @Composable
 private fun CategorySelectTabPreview() {
     CategoryScrollSelectTab(
-        categories = Category.entries,
+        state = MainScreenState(),
         onAction = {}
     )
 }

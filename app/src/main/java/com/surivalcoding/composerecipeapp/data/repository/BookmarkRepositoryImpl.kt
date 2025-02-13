@@ -12,7 +12,7 @@ class BookmarkRepositoryImpl @Inject constructor(
     private var bookmarkList = mutableListOf<Int>()
     private var isStarted = true
 
-    override suspend fun getBookmarkId(): List<Int> {
+    override suspend fun getAllBookmarkIds(): List<Int> {
         if (isStarted) {
             isStarted = false
             bookmarkList = dataSource.getAllUsers().map {
@@ -22,11 +22,16 @@ class BookmarkRepositoryImpl @Inject constructor(
             bookmarkList
         }
 
-        return bookmarkList
+        return bookmarkList.toList()
     }
 
     override suspend fun cancelBookmarkId(id: Int): List<Int> {
         bookmarkList.remove(id)
-        return bookmarkList
+        return bookmarkList.toList()
+    }
+
+    override suspend fun addBookmarkId(id: Int): List<Int> {
+        bookmarkList.add(id)
+        return bookmarkList.toList()
     }
 }

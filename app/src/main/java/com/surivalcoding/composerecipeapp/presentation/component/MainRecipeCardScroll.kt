@@ -7,16 +7,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainAction
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
 
 @Composable
 fun MainRecipeCardScroll(
     modifier: Modifier = Modifier,
-    recipes: List<Recipe>,
+    state: MainScreenState = MainScreenState(),
+    onAction: (MainAction) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
 
@@ -27,9 +29,11 @@ fun MainRecipeCardScroll(
             .horizontalScroll(scrollState),
         horizontalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        recipes.forEach { recipe ->
+        state.recipes.forEach { recipe ->
             MainRecipeCard(
                 recipe = recipe,
+                state = state,
+                onAction = onAction,
             )
         }
     }
@@ -52,6 +56,6 @@ private fun MainRecipeCardScrollPreview() {
     val recipes = listOf(recipe1, recipe1, recipe1, recipe1, recipe1)
 
     MainRecipeCardScroll(
-        recipes = recipes
+        state = MainScreenState(recipes = recipes)
     )
 }

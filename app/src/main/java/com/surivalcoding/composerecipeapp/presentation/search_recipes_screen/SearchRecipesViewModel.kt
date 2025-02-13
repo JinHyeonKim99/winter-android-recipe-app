@@ -153,7 +153,6 @@ class SearchRecipesViewModel @Inject constructor(
                     searchScreenText = if (_state.value.isSearching || _state.value.isFiltering) "Search Result" else "Recent Search",
                 )
             }
-            println(searchedRecipes.size)
         }
     }
 
@@ -166,13 +165,11 @@ class SearchRecipesViewModel @Inject constructor(
     private fun onRateFilterTabSelected(filterTab: FilterType) {
         viewModelScope.launch {
             val currentRateTab = _state.value.selectedRateTab
-            println(_state.value.selectedRateTab)
             _state.update {
                 it.copy(
                     selectedRateTab = if (currentRateTab == filterTab) Rate.ALL else filterTab
                 )
             }
-            println(_state.value.selectedRateTab)
         }
     }
 

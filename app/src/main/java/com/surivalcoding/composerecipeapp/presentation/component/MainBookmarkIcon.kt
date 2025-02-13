@@ -12,19 +12,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.surivalcoding.composerecipeapp.R
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainAction
+import com.surivalcoding.composerecipeapp.presentation.main_screen.MainScreenState
 import com.surivalcoding.composerecipeapp.ui.AppColors
 
 @Composable
-fun BookmarkIcon(
+fun MainBookmarkIcon(
     modifier: Modifier = Modifier,
     recipeId: Int,
-    isBookmarked: Boolean = true,
-    onBookmarkClick: (Int) -> Unit = {},
+    state: MainScreenState = MainScreenState(),
+    onAction: (MainAction) -> Unit = {},
 ) {
     Icon(
         painter = painterResource(id = R.drawable.bookmark),
         contentDescription = "Bookmark Icon",
-        tint = if (isBookmarked) AppColors.primary80 else AppColors.gray3,
+        tint = if (state.bookmarkList.contains(recipeId)) AppColors.primary80 else AppColors.gray3,
         modifier = modifier
             .size(24.dp)
             .aspectRatio(1f)
@@ -34,7 +36,10 @@ fun BookmarkIcon(
             )
             .padding(4.dp)
             .clickable {
-                onBookmarkClick(recipeId)
+                println("Bookmark clicked for recipe id: $recipeId")
+                onAction(
+                    MainAction.OnClickBookmarkButton(recipeId)
+                )
             },
     )
 }

@@ -7,6 +7,7 @@ data class MainScreenState(
     val isFocused: Boolean = true,
     val isLoading: Boolean = false,
     val recipes: List<Recipe> = emptyList(),
-    val isBookmarked: Boolean = false,
     val categories: List<Category> = Category.entries,
+    val selectedCategory: Category = Category.ALL,
+    val bookmarkList: List<Int> = emptyList(),
 )
