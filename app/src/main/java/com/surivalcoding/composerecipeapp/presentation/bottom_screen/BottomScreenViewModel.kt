@@ -1,7 +1,7 @@
-package com.surivalcoding.composerecipeapp.presentation.bottomscreen
+package com.surivalcoding.composerecipeapp.presentation.bottom_screen
 
 import androidx.lifecycle.ViewModel
-import com.surivalcoding.composerecipeapp.domain.usecase.GetSearchRecipesUseCase
+import com.surivalcoding.composerecipeapp.domain.use_case.GetSearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.surivalcoding.composerecipeapp.presentation.bottomscreen.BottomNavigationScreen
+import com.surivalcoding.composerecipeapp.presentation.bottom_screen.BottomNavigationScreen
 import com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen.SavedRecipesScreenRoot
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesScreenRoot
 import com.surivalcoding.composerecipeapp.presentation.sign_in.SignInScreen

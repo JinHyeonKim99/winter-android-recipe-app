@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.presentation.bottomscreen
+package com.surivalcoding.composerecipeapp.presentation.bottom_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

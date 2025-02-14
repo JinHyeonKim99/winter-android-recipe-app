@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.presentation.bottomscreen
+package com.surivalcoding.composerecipeapp.presentation.bottom_screen
 
 data class BottomScreenState(
     val isMainFocused: Boolean = false,

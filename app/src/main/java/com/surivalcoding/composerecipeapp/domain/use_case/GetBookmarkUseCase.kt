@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.domain.usecase
+package com.surivalcoding.composerecipeapp.domain.use_case
 
 import com.surivalcoding.composerecipeapp.domain.repository.BookmarkRepository
 import javax.inject.Inject
