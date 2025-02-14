@@ -1,9 +1,9 @@
 package com.surivalcoding.composerecipeapp.core.di.hilt
 
-import com.surivalcoding.composerecipeapp.data.filter.Category
-import com.surivalcoding.composerecipeapp.data.filter.FilterType
-import com.surivalcoding.composerecipeapp.data.filter.Rate
-import com.surivalcoding.composerecipeapp.data.filter.Time
+import com.surivalcoding.composerecipeapp.presentation.filter_enum.Category
+import com.surivalcoding.composerecipeapp.presentation.filter_enum.FilterType
+import com.surivalcoding.composerecipeapp.presentation.filter_enum.Rate
+import com.surivalcoding.composerecipeapp.presentation.filter_enum.Time
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

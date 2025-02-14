@@ -1,6 +1,6 @@
 package com.surivalcoding.composerecipeapp.presentation.search_recipes_screen
 
-import com.surivalcoding.composerecipeapp.data.filter.FilterType
+import com.surivalcoding.composerecipeapp.presentation.filter_enum.FilterType
 
 sealed interface SearchRecipesAction {
     data class InputQueryChange(val query: String) : SearchRecipesAction

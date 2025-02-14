@@ -2,7 +2,7 @@ package com.surivalcoding.composerecipeapp.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.surivalcoding.composerecipeapp.data.filter.Category
+import com.surivalcoding.composerecipeapp.presentation.filter_enum.Category
 import com.surivalcoding.composerecipeapp.domain.use_case.GetBookmarkUseCase
 import com.surivalcoding.composerecipeapp.domain.use_case.GetMainScreenRecipesUseCase
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
