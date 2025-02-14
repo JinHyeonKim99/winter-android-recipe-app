@@ -11,17 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -39,7 +33,6 @@ fun MainScreenSearchInputField(
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier = modifier
-            .aspectRatio(255 / 40f)
             .background(
                 color = Color.White,
                 shape = RoundedCornerShape(10.dp)
@@ -55,7 +48,7 @@ fun MainScreenSearchInputField(
             },
     ) {
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -71,7 +64,6 @@ fun MainScreenSearchInputField(
             ) {
                 Text(
                     modifier = Modifier
-                        .fillMaxWidth()
                         .align(Alignment.CenterStart),
                     text = placeholder,
                     style = AppTextStyles.smallerTextRegular.copy(

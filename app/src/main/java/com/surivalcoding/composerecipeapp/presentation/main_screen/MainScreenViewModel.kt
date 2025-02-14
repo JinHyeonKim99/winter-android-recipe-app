@@ -3,8 +3,8 @@ package com.surivalcoding.composerecipeapp.presentation.main_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.surivalcoding.composerecipeapp.data.filter.Category
-import com.surivalcoding.composerecipeapp.domain.GetBookmarkUseCase
-import com.surivalcoding.composerecipeapp.domain.GetMainScreenRecipesUseCase
+import com.surivalcoding.composerecipeapp.domain.usecase.GetBookmarkUseCase
+import com.surivalcoding.composerecipeapp.domain.usecase.GetMainScreenRecipesUseCase
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

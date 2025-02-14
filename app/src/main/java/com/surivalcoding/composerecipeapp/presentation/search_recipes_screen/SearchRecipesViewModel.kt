@@ -7,7 +7,7 @@ import com.surivalcoding.composerecipeapp.data.filter.FilterType
 import com.surivalcoding.composerecipeapp.data.filter.Rate
 import com.surivalcoding.composerecipeapp.data.filter.Time
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
-import com.surivalcoding.composerecipeapp.domain.GetSearchRecipesUseCase
+import com.surivalcoding.composerecipeapp.domain.usecase.GetSearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,7 +1,7 @@
 //package com.surivalcoding.composerecipeapp.core.di.koin
 //
-//import com.surivalcoding.composerecipeapp.domain.GetBookmarkUseCase
-//import com.surivalcoding.composerecipeapp.domain.GetSavedRecipesUseCase
+//import com.surivalcoding.composerecipeapp.domain.usecase.GetBookmarkUseCase
+//import com.surivalcoding.composerecipeapp.domain.usecase.GetSavedRecipesUseCase
 //import com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen.SavedRecipeViewModel
 //import org.koin.core.module.dsl.viewModel
 //import org.koin.dsl.module

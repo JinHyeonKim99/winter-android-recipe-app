@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -54,10 +53,11 @@ fun MainScreen(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
+                        modifier = Modifier.weight(195f),
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
@@ -78,12 +78,13 @@ fun MainScreen(
 
                     Image(
                         modifier = Modifier
-                            .size(40.dp)
                             .aspectRatio(1f)
+                            .weight(40f)
                             .background(
                                 color = AppColors.secondary40,
                                 shape = RoundedCornerShape(10.dp)
                             ),
+                        alignment = Alignment.BottomEnd,
                         painter = painterResource(id = R.drawable.profile_default_icon),
                         contentDescription = "Profile default icon",
                         contentScale = ContentScale.FillBounds
@@ -91,11 +92,12 @@ fun MainScreen(
                 }
 
                 Row(
+                    modifier = Modifier.aspectRatio(315/40f),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     MainScreenSearchInputField(
-                        modifier = Modifier.weight(255f),
+                        modifier = Modifier,
                         placeholder = "Search recipe",
                         onClick = {
                             onAction(MainAction.OnClickSearchField)
@@ -103,7 +105,7 @@ fun MainScreen(
                     )
 
                     FilterButton(
-                        modifier = Modifier.weight(40f)
+                        modifier = Modifier
                     )
                 }
             }

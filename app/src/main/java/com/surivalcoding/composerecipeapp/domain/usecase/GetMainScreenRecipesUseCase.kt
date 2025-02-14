@@ -1,10 +1,11 @@
-package com.surivalcoding.composerecipeapp.domain
+package com.surivalcoding.composerecipeapp.domain.usecase
 
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.domain.repository.RecipeRepository
 import javax.inject.Inject
 
-class GetSearchRecipesUseCase @Inject constructor(
+
+class GetMainScreenRecipesUseCase @Inject constructor(
     private val recipeRepository: RecipeRepository,
 ) {
     suspend fun execute(): List<Recipe> {
