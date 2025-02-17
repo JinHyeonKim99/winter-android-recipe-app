@@ -2,10 +2,10 @@ package com.surivalcoding.composerecipeapp.presentation.search_recipes_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.Category
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.FilterType
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.Rate
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.Time
+import com.surivalcoding.composerecipeapp.presentation.Category
+import com.surivalcoding.composerecipeapp.presentation.FilterType
+import com.surivalcoding.composerecipeapp.presentation.Rate
+import com.surivalcoding.composerecipeapp.presentation.Time
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.domain.use_case.GetSearchRecipesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

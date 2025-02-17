@@ -1,6 +1,6 @@
 package com.surivalcoding.composerecipeapp.presentation.main_screen
 
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.Category
+import com.surivalcoding.composerecipeapp.presentation.Category
 
 sealed interface MainAction {
     data class OnClickCategoryTab(val category: Category) : MainAction

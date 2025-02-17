@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.presentation.filter_enum
+package com.surivalcoding.composerecipeapp.presentation
 
 enum class Category(override val displayName: String) : FilterType {
     ALL("All"),

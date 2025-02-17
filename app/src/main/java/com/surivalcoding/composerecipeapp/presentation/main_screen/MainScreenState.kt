@@ -1,6 +1,6 @@
 package com.surivalcoding.composerecipeapp.presentation.main_screen
 
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.Category
+import com.surivalcoding.composerecipeapp.presentation.Category
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 
 data class MainScreenState(

@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.FilterType
-import com.surivalcoding.composerecipeapp.presentation.filter_enum.Rate
+import com.surivalcoding.composerecipeapp.presentation.FilterType
+import com.surivalcoding.composerecipeapp.presentation.Rate
 import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesAction
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
