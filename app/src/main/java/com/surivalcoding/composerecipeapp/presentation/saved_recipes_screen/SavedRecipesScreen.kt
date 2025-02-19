@@ -60,7 +60,7 @@ fun SavedRecipesScreen(
                     verticalArrangement = Arrangement.spacedBy(20.dp),
 
                     ) {
-                    items(state.savedRecipes) { recipe ->
+                    items(key = { recipe -> recipe.id }, items = state.savedRecipes) { recipe ->
                         RecipeCard(
                             recipe = recipe,
                             modifier = Modifier,
