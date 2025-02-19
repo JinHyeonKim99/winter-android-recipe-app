@@ -26,10 +26,10 @@ class MainScreenViewModel @Inject constructor(
     private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState())
     val state = _state.asStateFlow()
 
-//    private val _event = MutableSharedFlow<MainScreenEvent>()
-//    val event = _event.asSharedFlow()
-    private val _event = Channel<MainScreenEvent>()
-    val event = _event.receiveAsFlow()
+    private val _event = MutableSharedFlow<MainScreenEvent>()
+    val event = _event.asSharedFlow()
+//    private val _event = Channel<MainScreenEvent>()
+//    val event = _event.receiveAsFlow()
 
     private var initialRecipes: List<Recipe> = emptyList()  // 초기 리스트 저장
     private var filteredRecipes: List<Recipe> = emptyList() // 필터 적용된 리스트
@@ -60,8 +60,8 @@ class MainScreenViewModel @Inject constructor(
             when (val result = getMainScreenRecipesUseCase.execute()) {
                 is Result.Error -> {
                     println(result.message)
-//                    _event.emit(MainScreenEvent.ShowSnackbar(result.message.toString()))
-                    _event.send(MainScreenEvent.ShowSnackbar(result.message.toString()))
+                    _event.emit(MainScreenEvent.ShowSnackbar(result.message.toString()))
+//                    _event.send(MainScreenEvent.ShowSnackbar(result.message.toString()))
                 }
 
                 is Result.Success -> {

@@ -15,13 +15,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryHiltModule {
 
-//    @Singleton
-//    @Binds
-//    abstract fun provideRecipeRepository(recipeRepository: RecipeRepositoryImpl): RecipeRepository
-
     @Singleton
     @Binds
-    abstract fun provideRecipeRepository(recipeRepository: MockNetworkErrorRecipeRepositoryImpl): RecipeRepository
+    abstract fun provideRecipeRepository(recipeRepository: RecipeRepositoryImpl): RecipeRepository
+
+//    @Singleton
+//    @Binds
+//    abstract fun provideRecipeRepository(recipeRepository: MockNetworkErrorRecipeRepositoryImpl): RecipeRepository
 
     @Singleton
     @Binds
