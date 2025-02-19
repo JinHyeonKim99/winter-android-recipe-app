@@ -21,7 +21,7 @@ fun FilterButton(
 ) {
     Icon(
         modifier = modifier
-            .aspectRatio(40/40f)
+            .aspectRatio(1f)
             .background(
                 color = AppColors.primary100,
                 shape = RoundedCornerShape(10.dp)

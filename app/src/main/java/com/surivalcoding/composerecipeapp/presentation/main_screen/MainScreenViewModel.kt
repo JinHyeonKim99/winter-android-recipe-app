@@ -2,13 +2,18 @@ package com.surivalcoding.composerecipeapp.presentation.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.surivalcoding.composerecipeapp.core.util.Result
 import com.surivalcoding.composerecipeapp.presentation.Category
 import com.surivalcoding.composerecipeapp.domain.use_case.GetBookmarkUseCase
 import com.surivalcoding.composerecipeapp.domain.use_case.GetMainScreenRecipesUseCase
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +25,11 @@ class MainScreenViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState())
     val state = _state.asStateFlow()
+
+//    private val _event = MutableSharedFlow<MainScreenEvent>()
+//    val event = _event.asSharedFlow()
+    private val _event = Channel<MainScreenEvent>()
+    val event = _event.receiveAsFlow()
 
     private var initialRecipes: List<Recipe> = emptyList()  // 초기 리스트 저장
     private var filteredRecipes: List<Recipe> = emptyList() // 필터 적용된 리스트
@@ -47,19 +57,28 @@ class MainScreenViewModel @Inject constructor(
             // 로딩 시작
             _state.update { it.copy(isLoading = true) }
 
-            val recipes = getMainScreenRecipesUseCase.execute()
-            initialRecipes = recipes
-            filteredRecipes = recipes
+            when (val result = getMainScreenRecipesUseCase.execute()) {
+                is Result.Error -> {
+                    println(result.message)
+//                    _event.emit(MainScreenEvent.ShowSnackbar(result.message.toString()))
+                    _event.send(MainScreenEvent.ShowSnackbar(result.message.toString()))
+                }
 
-            // 로딩 종료 및 상태 업데이트
-            _state.update {
-                it.copy(
-                    isLoading = false,
-                    recipes = recipes
-                )
+                is Result.Success -> {
+                    initialRecipes = result.data
+                    filteredRecipes = result.data
+
+                    // 로딩 종료 및 상태 업데이트
+                    _state.update {
+                        it.copy(
+                            isLoading = false,
+                            recipes = result.data
+                        )
+                    }
+
+                    onBookmarkCheck()
+                }
             }
-
-            onBookmarkCheck()
         }
     }
 

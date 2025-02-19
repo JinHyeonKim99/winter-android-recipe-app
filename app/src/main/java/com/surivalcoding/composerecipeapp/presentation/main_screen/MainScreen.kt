@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,11 +54,11 @@ fun MainScreen(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(
-                        modifier = Modifier.weight(195f),
+                        modifier = Modifier.weight(255f),
                         verticalArrangement = Arrangement.spacedBy(5.dp)
                     ) {
                         Text(
@@ -71,7 +72,7 @@ fun MainScreen(
                             style = AppTextStyles.smallerTextRegular.copy(
                                 fontSize = 11.sp,
                                 lineHeight = 17.sp,
-                                color = AppColors.font
+                                color = AppColors.gray3
                             )
                         )
                     }
@@ -84,7 +85,6 @@ fun MainScreen(
                                 color = AppColors.secondary40,
                                 shape = RoundedCornerShape(10.dp)
                             ),
-                        alignment = Alignment.BottomEnd,
                         painter = painterResource(id = R.drawable.profile_default_icon),
                         contentDescription = "Profile default icon",
                         contentScale = ContentScale.FillBounds
@@ -92,12 +92,11 @@ fun MainScreen(
                 }
 
                 Row(
-                    modifier = Modifier.aspectRatio(315/40f),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
                     MainScreenSearchInputField(
-                        modifier = Modifier,
+                        modifier = Modifier.weight(255f),
                         placeholder = "Search recipe",
                         onClick = {
                             onAction(MainAction.OnClickSearchField)
@@ -105,7 +104,7 @@ fun MainScreen(
                     )
 
                     FilterButton(
-                        modifier = Modifier
+                        modifier = Modifier.weight(40f)
                     )
                 }
             }

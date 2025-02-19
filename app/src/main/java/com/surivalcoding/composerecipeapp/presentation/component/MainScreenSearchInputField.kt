@@ -33,6 +33,7 @@ fun MainScreenSearchInputField(
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier = modifier
+            .aspectRatio(255 / 40f)
             .background(
                 color = Color.White,
                 shape = RoundedCornerShape(10.dp)
@@ -48,7 +49,7 @@ fun MainScreenSearchInputField(
             },
     ) {
         Row(
-            modifier = Modifier,
+            modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -64,6 +65,7 @@ fun MainScreenSearchInputField(
             ) {
                 Text(
                     modifier = Modifier
+                        .fillMaxWidth()
                         .align(Alignment.CenterStart),
                     text = placeholder,
                     style = AppTextStyles.smallerTextRegular.copy(
