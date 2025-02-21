@@ -1,4 +1,4 @@
-package com.surivalcoding.composerecipeapp.data.dto
+package com.surivalcoding.composerecipeapp.data.remote.dto
 
 import kotlinx.serialization.Serializable
 

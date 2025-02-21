@@ -3,6 +3,7 @@ package com.surivalcoding.composerecipeapp.presentation.saved_recipes_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.surivalcoding.composerecipeapp.domain.use_case.GetSavedRecipesUseCase
+import com.surivalcoding.composerecipeapp.presentation.search_recipes_screen.SearchRecipesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,11 +37,7 @@ class SavedRecipeViewModel @Inject constructor(
         viewModelScope.launch {
             val recipes = getSavedRecipesUseCase.execute(id)
 
-            _state.update {
-                it.copy(
-                    savedRecipes = recipes
-                )
-            }
+            _state.emit(SavedRecipeState(savedRecipes = recipes))
         }
     }
 

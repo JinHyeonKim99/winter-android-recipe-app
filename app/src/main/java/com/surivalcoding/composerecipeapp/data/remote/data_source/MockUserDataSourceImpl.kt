@@ -1,6 +1,6 @@
-package com.surivalcoding.composerecipeapp.data.data_source
+package com.surivalcoding.composerecipeapp.data.remote.data_source
 
-import com.surivalcoding.composerecipeapp.data.dto.UserDto
+import com.surivalcoding.composerecipeapp.data.remote.dto.UserDto
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -17,5 +17,9 @@ class MockUserDataSourceImpl @Inject constructor() : UserDataSource {
 
     override suspend fun getAllUsers(): List<UserDto> {
         return Json.decodeFromString<List<UserDto>>(json)
+    }
+
+    override suspend fun getUserById(id: Int): List<UserDto> {
+        return Json.decodeFromString<List<UserDto>>(json).filter { it.userId == id }
     }
 }

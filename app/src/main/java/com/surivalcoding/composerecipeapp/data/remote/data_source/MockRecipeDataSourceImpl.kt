@@ -1,23 +1,22 @@
-package com.surivalcoding.composerecipeapp.data.data_source
+package com.surivalcoding.composerecipeapp.data.remote.data_source
 
-import com.surivalcoding.composerecipeapp.data.dto.RecipeDto
-import com.surivalcoding.composerecipeapp.data.dto.RecipesResult
+import com.surivalcoding.composerecipeapp.data.remote.dto.RecipeDto
+import com.surivalcoding.composerecipeapp.data.remote.dto.RecipesResult
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
+class MockRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
     private val json = """
         {
           "recipes": [
             {
-              "category": "Italian",
+              "category": "Indian",
               "id": 1,
               "name": "Traditional spare ribs baked",
-              "image": "https://d2u3dcdbebyaiu.cloudfront.net/uploads/atch_img/150/667b0f908da4e242180cf0ca1880c556_res.jpeg",
+              "image": "https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg",
               "chef": "Chef John",
               "time": "20 min",
               "rating": 4.0,
-              "date": "250207",
               "ingredients": [
                 {
                     "id": 3,
@@ -47,13 +46,12 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
             },
             {
               "id": 2,
-              "category": "Italian",
+              "category": "Asian",
               "name": "Spice roasted chicken with flavored rice",
-              "image": "https://i.pinimg.com/736x/35/d8/48/35d848a665f27f3c75f0e8234f7f69ce.jpg",
+              "image": "https://cdn.pixabay.com/photo/2018/12/04/16/49/tandoori-3856045_1280.jpg",
               "chef": "Mark Kelvin",
               "time": "20 min",
               "rating": 4.0,
-              "date": "250807",
               "ingredients": [
                 {
                     "id": 6,
@@ -83,13 +81,12 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
             },
             {
               "id": 3,
-              "category": "Italian",
+              "category": "Chinese",
               "name": "Spicy fried rice mix chicken bali",
-              "image": "https://scontent-gmp1-1.xx.fbcdn.net/v/t1.6435-9/33893749_2133613056916900_1854177672771403776_n.png?_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=4fNEpGFtEh4Q7kNvgEqyHs7&_nc_zt=23&_nc_ht=scontent-gmp1-1.xx&_nc_gid=AALcdNjZHwFWzI1xz81Gjdd&oh=00_AYDJNAQpxPygsYxzAyvw2g6Mj2RsuXsA1C_Le03fqiCT1Q&oe=67B9ED4F",
+              "image": "https://cdn.pixabay.com/photo/2019/09/07/19/02/spanish-paella-4459519_1280.jpg",
               "chef": "Spicy Nelly",
               "time": "20 min",
               "rating": 4.0,
-              "date": "240207",
               "ingredients": [
                 {
                     "id": 6,
@@ -112,25 +109,23 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
               ]
             },
             {
-              "category": "Italian",
+              "category": "Japanese",
               "id": 4,
               "name": "Ttekbokki",
-              "image": "https://i.pinimg.com/736x/4c/42/23/4c4223fe633e2774a886289207cf3f15.jpg",
+              "image": "https://cdn.pixabay.com/photo/2017/07/27/16/48/toppokki-2545943_1280.jpg",
               "chef": "Kim Dahee",
               "time": "30 min",
               "rating": 5.0,
-              "date": "240607",
               "ingredients": []
             },
             {
               "id": 5,
-              "category": "Italian",
+              "category": "American",
               "name": "Grilled salmon with avocado salsa",
               "image": "https://cdn.pixabay.com/photo/2014/11/05/15/57/salmon-518032_1280.jpg",
               "chef": "Alice Johnson",
               "time": "25 min",
               "rating": 4.5,
-              "date": "210207",
               "ingredients": [
                 {
                     "id": 5,
@@ -154,7 +149,6 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
               "chef": "Gordon Ramsay",
               "time": "45 min",
               "rating": 5.0,
-              "date": "250107",
               "ingredients": [
                 {
                     "id": 2,
@@ -178,7 +172,6 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
               "chef": "Mario Batali",
               "time": "15 min",
               "rating": 4.3,
-              "date": "240617",
               "ingredients": [
                 {
                     "id": 1,
@@ -196,7 +189,6 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
               "chef": "Jiro Ono",
               "time": "60 min",
               "rating": 4.8,
-              "date": "191207",
               "ingredients": [
                 {
                     "id": 6,
@@ -220,7 +212,6 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
               "chef": "Julia Child",
               "time": "40 min",
               "rating": 4.6,
-              "date": "20201010",
               "ingredients": [
                 {
                     "id": 9,
@@ -238,7 +229,6 @@ class MockProdRecipeDataSourceImpl @Inject constructor() : RecipeDataSource {
               "chef": "Paul Hollywood",
               "time": "30 min",
               "rating": 4.9,
-              "date": "220207",
               "ingredients": [
                 {
                     "id": 7,

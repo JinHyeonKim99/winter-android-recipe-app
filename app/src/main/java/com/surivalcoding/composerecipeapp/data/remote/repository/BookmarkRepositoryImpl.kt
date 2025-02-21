@@ -1,7 +1,7 @@
-package com.surivalcoding.composerecipeapp.data.repository
+package com.surivalcoding.composerecipeapp.data.remote.repository
 
-import com.surivalcoding.composerecipeapp.data.data_source.UserDataSource
-import com.surivalcoding.composerecipeapp.data.mapper.toUser
+import com.surivalcoding.composerecipeapp.data.remote.data_source.UserDataSource
+import com.surivalcoding.composerecipeapp.data.remote.mapper.toUser
 import com.surivalcoding.composerecipeapp.domain.repository.BookmarkRepository
 import javax.inject.Inject
 
@@ -12,10 +12,10 @@ class BookmarkRepositoryImpl @Inject constructor(
     private var bookmarkList = mutableListOf<Int>()
     private var isStarted = true
 
-    override suspend fun getAllBookmarkIds(): List<Int> {
+    override suspend fun getAllBookmarkIds(userId: Int): List<Int> {
         if (isStarted) {
             isStarted = false
-            bookmarkList = dataSource.getAllUsers().map {
+            bookmarkList = dataSource.getUserById(userId).map {
                 it.toUser()
             }[0].savedRecipesId.toMutableList()
         } else {
@@ -25,13 +25,13 @@ class BookmarkRepositoryImpl @Inject constructor(
         return bookmarkList.toList()
     }
 
-    override suspend fun cancelBookmarkId(id: Int): List<Int> {
-        bookmarkList.remove(id)
+    override suspend fun cancelBookmarkId(recipeId: Int): List<Int> {
+        bookmarkList.remove(recipeId)
         return bookmarkList.toList()
     }
 
-    override suspend fun addBookmarkId(id: Int): List<Int> {
-        bookmarkList.add(id)
+    override suspend fun addBookmarkId(recipeId: Int): List<Int> {
+        bookmarkList.add(recipeId)
         return bookmarkList.toList()
     }
 }

@@ -1,7 +1,7 @@
 package com.surivalcoding.composerecipeapp.core.di.hilt
 
-import com.surivalcoding.composerecipeapp.data.data_source.MockUserDataSourceImpl
-import com.surivalcoding.composerecipeapp.data.data_source.UserDataSource
+import com.surivalcoding.composerecipeapp.data.remote.data_source.MockUserDataSourceImpl
+import com.surivalcoding.composerecipeapp.data.remote.data_source.UserDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ abstract class DataSourceHiltModule {
 
     @Singleton
     @Binds
-    abstract fun provideUserDataSource(
+    abstract fun bindUserDataSource(
         userDataSourceImpl: MockUserDataSourceImpl,
     ): UserDataSource
 

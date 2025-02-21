@@ -1,6 +1,6 @@
-package com.surivalcoding.composerecipeapp.data.mapper
+package com.surivalcoding.composerecipeapp.data.remote.mapper
 
-import com.surivalcoding.composerecipeapp.data.dto.UserDto
+import com.surivalcoding.composerecipeapp.data.remote.dto.UserDto
 import com.surivalcoding.composerecipeapp.domain.model.User
 
 fun UserDto.toUser() = User(

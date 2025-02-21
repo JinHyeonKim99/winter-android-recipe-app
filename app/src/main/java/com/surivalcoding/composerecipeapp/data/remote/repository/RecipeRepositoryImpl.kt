@@ -1,7 +1,7 @@
-package com.surivalcoding.composerecipeapp.data.repository
+package com.surivalcoding.composerecipeapp.data.remote.repository
 
-import com.surivalcoding.composerecipeapp.data.data_source.RecipeDataSource
-import com.surivalcoding.composerecipeapp.data.mapper.toRecipe
+import com.surivalcoding.composerecipeapp.data.remote.data_source.RecipeDataSource
+import com.surivalcoding.composerecipeapp.data.remote.mapper.toRecipe
 import com.surivalcoding.composerecipeapp.domain.model.Recipe
 import com.surivalcoding.composerecipeapp.domain.repository.RecipeRepository
 import javax.inject.Inject
