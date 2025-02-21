@@ -99,13 +99,15 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation:1.2.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
+    // Room
     val room_version = "2.6.1"
-
     implementation("androidx.room:room-runtime:$room_version")
 
     // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
     // See Add the KSP plugin to your project
     ksp("androidx.room:room-compiler:$room_version")
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
 }
 
 kapt {
