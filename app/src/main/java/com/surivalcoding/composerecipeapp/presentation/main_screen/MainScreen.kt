@@ -5,12 +5,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +30,7 @@ import com.surivalcoding.composerecipeapp.presentation.component.CategoryScrollS
 import com.surivalcoding.composerecipeapp.presentation.component.FilterButton
 import com.surivalcoding.composerecipeapp.presentation.component.MainRecipeCardScroll
 import com.surivalcoding.composerecipeapp.presentation.component.MainScreenSearchInputField
+import com.surivalcoding.composerecipeapp.presentation.component.NewRecipeItem
 import com.surivalcoding.composerecipeapp.ui.AppColors
 import com.surivalcoding.composerecipeapp.ui.AppTextStyles
 
@@ -118,6 +122,30 @@ fun MainScreen(
                 state = state,
                 onAction = onAction,
             )
+
+            // New Recipes 타이틀
+            Text(
+                text = "New Recipes",
+                modifier = Modifier.padding(start = 30.dp),
+                style = AppTextStyles.mediumTextBold.copy(
+                    fontSize = 16.sp,
+                    color = AppColors.black
+                )
+            )
+
+            // NewRecipeList 가져오기
+            LazyRow(
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(start = 30.dp, end = 20.dp),
+                horizontalArrangement = Arrangement.spacedBy(15.dp),
+            ) {
+                itemsIndexed(state.recipes) { id, recipe ->
+                    NewRecipeItem(
+                        recipe = recipe,
+                        itemIndex = id
+                    )
+                }
+            }
         }
     }
 }
