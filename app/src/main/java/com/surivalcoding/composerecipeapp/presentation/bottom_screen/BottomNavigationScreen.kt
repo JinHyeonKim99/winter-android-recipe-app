@@ -51,7 +51,7 @@ fun BottomNavigationScreen(
             BottomNavigation(
                 modifier = Modifier
                     .height(92.dp)
-                    .padding(top = 12.dp, start = 40.dp, end = 40.dp, bottom = 58.dp),
+                    .padding(top = 12.dp, start = 90.dp, end = 40.dp, bottom = 58.dp),
                 backgroundColor = Color.Transparent,
                 elevation = 0.dp,
             ) {
@@ -103,54 +103,54 @@ fun BottomNavigationScreen(
                         }
                     }
                 )
-                BottomNavigationItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.notification_icon),
-                            tint = AppColors.primary80,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .aspectRatio(1f),
-                            contentDescription = null
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 55.dp),
-                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Third::class) } == true,
-                    onClick = {
-                        bottomNavController.navigate(BottomRoute.Third) {
-                            popUpTo<BottomRoute.Main> {
-                                inclusive = true
-                            }
-                            restoreState = true
-                        }
-                    }
-                )
-                BottomNavigationItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.profile_icon),
-                            tint = AppColors.primary80,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .aspectRatio(1f),
-                            contentDescription = null
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 55.dp),
-                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Fourth::class) } == true,
-                    onClick = {
-                        bottomNavController.navigate(BottomRoute.Fourth) {
-                            popUpTo<BottomRoute.Main> {
-                                inclusive = true
-                            }
-                            restoreState = true
-                        }
-                    }
-                )
+//                BottomNavigationItem(
+//                    icon = {
+//                        Icon(
+//                            painter = painterResource(id = R.drawable.notification_icon),
+//                            tint = AppColors.primary80,
+//                            modifier = Modifier
+//                                .size(24.dp)
+//                                .aspectRatio(1f),
+//                            contentDescription = null
+//                        )
+//                    },
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(start = 55.dp),
+//                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Third::class) } == true,
+//                    onClick = {
+//                        bottomNavController.navigate(BottomRoute.Third) {
+//                            popUpTo<BottomRoute.Main> {
+//                                inclusive = true
+//                            }
+//                            restoreState = true
+//                        }
+//                    }
+//                )
+//                BottomNavigationItem(
+//                    icon = {
+//                        Icon(
+//                            painter = painterResource(id = R.drawable.profile_icon),
+//                            tint = AppColors.primary80,
+//                            modifier = Modifier
+//                                .size(24.dp)
+//                                .aspectRatio(1f),
+//                            contentDescription = null
+//                        )
+//                    },
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .padding(start = 55.dp),
+//                    selected = currentDestination?.hierarchy?.any { it.hasRoute(BottomRoute.Fourth::class) } == true,
+//                    onClick = {
+//                        bottomNavController.navigate(BottomRoute.Fourth) {
+//                            popUpTo<BottomRoute.Main> {
+//                                inclusive = true
+//                            }
+//                            restoreState = true
+//                        }
+//                    }
+//                )
             }
         }
     ) {

@@ -1,8 +1,8 @@
 package com.surivalcoding.composerecipeapp.core.di.hilt
 
-import com.surivalcoding.composerecipeapp.data.repository.BookmarkRepositoryImpl
-import com.surivalcoding.composerecipeapp.data.repository.MockNetworkErrorRecipeRepositoryImpl
-import com.surivalcoding.composerecipeapp.data.repository.RecipeRepositoryImpl
+import com.surivalcoding.composerecipeapp.data.remote.repository.BookmarkRepositoryImpl
+import com.surivalcoding.composerecipeapp.data.remote.repository.MockNetworkErrorRecipeRepositoryImpl
+import com.surivalcoding.composerecipeapp.data.remote.repository.RecipeRepositoryImpl
 import com.surivalcoding.composerecipeapp.domain.repository.BookmarkRepository
 import com.surivalcoding.composerecipeapp.domain.repository.RecipeRepository
 import dagger.Binds
@@ -17,7 +17,7 @@ abstract class RepositoryHiltModule {
 
     @Singleton
     @Binds
-    abstract fun provideRecipeRepository(recipeRepository: RecipeRepositoryImpl): RecipeRepository
+    abstract fun bindRecipeRepository(recipeRepository: RecipeRepositoryImpl): RecipeRepository
 
 //    @Singleton
 //    @Binds
@@ -25,5 +25,5 @@ abstract class RepositoryHiltModule {
 
     @Singleton
     @Binds
-    abstract fun provideBookmarkRepository(bookmarkRepository: BookmarkRepositoryImpl): BookmarkRepository
+    abstract fun bindBookmarkRepository(bookmarkRepository: BookmarkRepositoryImpl): BookmarkRepository
 }
